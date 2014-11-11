@@ -27,16 +27,11 @@ private Background bg;
 		
 		try {
 			
-			bg = new Background("/Backgrounds/backgroundmenu.png", 1);
+			bg = new Background("/Backgrounds/backgroundmenu.jpg", 1);
 			
 			
-			titleColor = new Color(128, 0, 0);
-			titleFont = new Font(    
-					"Century Gothic",
-					Font.PLAIN,
-					100);   
 			
-			font = new Font("Arial", Font.PLAIN, 50);    // menu font
+			font = new Font("Berlin Sans FB Demi", Font.PLAIN, 50);    // menu font
 			
 		}
 		catch(Exception e) {
@@ -56,21 +51,17 @@ private Background bg;
 		// draw bg
 		bg.draw(g);
 		
-		// draw title
-		g.setColor(titleColor);
-		g.setFont(titleFont);
-		g.drawString("SD Warrior", 180, 200);
-		
+	
 		// draw menu options
 		g.setFont(font);
 		for(int i = 0; i < options.length; i++) {
 			if(i == currentChoice) {
-				g.setColor(Color.BLACK);
+				g.setColor(Color.BLUE);
 			}
 			else {
-				g.setColor(Color.RED);
+				g.setColor(Color.YELLOW);
 			}
-			g.drawString(options[i], 350, 340 + i * 50);
+			g.drawString(options[i], 350, 290 + i * 70);
 		}
 		
 	}
