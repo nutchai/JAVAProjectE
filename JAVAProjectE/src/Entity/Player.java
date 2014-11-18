@@ -39,7 +39,7 @@ public class Player extends MapObject {
 	// animations
 	private ArrayList<BufferedImage[]> sprites;
 	private final int[] numFrames = {
-		1 ,6 ,9 ,6 ,7 ,5 //how many of frame of each action
+		4 ,6 ,4 ,6 ,7 ,5 //how many of frame of each action
 	};
 	
 	// animation actions
@@ -302,8 +302,8 @@ public class Player extends MapObject {
 				//sfx.get("scratch").play();
 				currentAction = SLASHING;
 				animation.setFrames(sprites.get(SLASHING));
-				animation.setDelay(50);
-				width = 60;
+				animation.setDelay(90);
+				width = 100;
 			}
 		}
 		else if(casting) {

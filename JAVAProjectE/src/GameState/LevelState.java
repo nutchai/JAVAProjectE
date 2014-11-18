@@ -1,17 +1,24 @@
 package GameState;
 
-import Main.GamePanel;
-import TileMap.*;
-import Entity.*;
-
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+
+import Enemy.Entity.Skull;
+import Entity.Enemy;
+import Entity.Player;
+import Main.GamePanel;
+import TileMap.TileMap;
 
 public class LevelState extends GameState {
-	
+	private int currentx;
+	private int currenty;
+	private ArrayList<Enemy> enemies;
 	private TileMap tileMap;
 	
 	private Player player;
+	private Skull skull;
 	
 	public LevelState(GameStateManager gsm) {
 		this.gsm = gsm;
@@ -27,7 +34,10 @@ public class LevelState extends GameState {
 		
 		player = new Player(tileMap);
 		player.setPosition(350, 350);
+		enemies = new ArrayList<Enemy>();
 		
+		skull = new Skull(tileMap);
+		enemies.add(skull);
 	}
 	
 	
@@ -36,6 +46,10 @@ public class LevelState extends GameState {
 		// update player
 		player.update();
 		
+		// update monster
+		for(int i = 0 ;i<enemies.size();i++){
+			enemies.get(i).update();
+		}
 	}
 	
 	public void draw(Graphics2D g) {
@@ -49,6 +63,11 @@ public class LevelState extends GameState {
 		
 		// draw player
 		player.draw(g);
+		
+		// draw monster
+		for(int i =0 ;i<enemies.size();i++){
+			enemies.get(i).draw(g);
+		}
 		
 	}
 	
