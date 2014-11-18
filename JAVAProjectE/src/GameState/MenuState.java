@@ -61,7 +61,7 @@ private Background bg;
 			else {
 				g.setColor(Color.YELLOW);
 			}
-			g.drawString(options[i], 350, 290 + i * 70);
+			g.drawString(options[i], 320, 270 + i * 70);
 		}
 		
 	}
