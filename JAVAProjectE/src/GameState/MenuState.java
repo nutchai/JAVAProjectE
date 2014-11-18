@@ -12,7 +12,7 @@ private Background bg;
 	private int currentChoice = 0;
 	private String[] options = {
 		"Start",
-		"Help",
+		"Tutorial",
 		"Quit"
 	};
 	

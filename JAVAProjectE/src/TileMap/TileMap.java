@@ -96,9 +96,9 @@ public class TileMap {
 				subimage = tileset.getSubimage(col * tileSize,tileSize*17,tileSize,tileSize);
 				tiles[17][col] = new Tile(subimage, Tile.WALKABLE);
 				subimage = tileset.getSubimage(col * tileSize,tileSize*18,tileSize,tileSize);
-				tiles[18][col] = new Tile(subimage, Tile.WALKABLE);
+				tiles[18][col] = new Tile(subimage, Tile.UNWALKABLE);
 				subimage = tileset.getSubimage(col * tileSize,tileSize*19,tileSize,tileSize);
-				tiles[19][col] = new Tile(subimage, Tile.WALKABLE);
+				tiles[19][col] = new Tile(subimage, Tile.UNWALKABLE);
 			}
 			
 		}
