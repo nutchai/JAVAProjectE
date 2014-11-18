@@ -1,10 +1,13 @@
 package Entity;
 
+import Entity.Animation;
+import Entity.MapObject;
 import TileMap.*;
-//import Audio.AudioPlayer;
 
 import java.util.ArrayList;
+
 import javax.imageio.ImageIO;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
@@ -20,26 +23,37 @@ public class Player extends MapObject {
 	private boolean flinching;
 	private long flinchTimer;
 	
-	
 	// Magic 1-6
 	private boolean casting;
-	private int castCost;
-	private boolean spelling;
-	private int spellDamage;
-	//private ArrayList<Skills> skills;
+	private boolean castingMagic1;
+	private boolean castingMagic2;
+	private boolean castingMagic3;
+	private boolean castingMagic4;
+	private boolean castingMagic5;
+	private boolean castingMagic6;
+	private int castCostMagic1;
+	private int castCostMagic2;
+	private int castCostMagic3;
+	private int castCostMagic4;
+	private int castCostMagic5;
+	private int castCostMagic6;
+	private int damageMagic1;
+	private int damageMagic2;
+	private int damageMagic3;
+	private int damageMagic4;
+	private int damageMagic5;
+	private int healMagic6;
+	private ArrayList<Skills> skills;
 	
 	// Slash
 	private boolean slashing;
 	private int slashDamage;
 	private int slashRange;
 	
-	//Cancel Casting
-	private boolean cancelcasting;
-	
 	// animations
 	private ArrayList<BufferedImage[]> sprites;
 	private final int[] numFrames = {
-		4 ,6 ,4 ,6 ,7 ,5 //how many of frame of each action
+		4 ,6 ,4 ,2 //how many of frame of each action
 	};
 	
 	// animation actions
@@ -47,14 +61,6 @@ public class Player extends MapObject {
 	private static final int WALKING = 1;
 	private static final int SLASHING = 2;
 	private static final int CASTING = 3;
-	private static final int SPELLING = 4;
-	private static final int MAGIC1 = 5;
-	/*private static final int MAGIC2 = 6;
-	private static final int MAGIC3 = 7;
-	private static final int MAGIC4 = 8;
-	private static final int MAGIC5 = 9;
-	private static final int MAGIC6 = 10;*/
-	
 	
 	//private HashMap<String, AudioPlayer> sfx;
 	
@@ -67,7 +73,7 @@ public class Player extends MapObject {
 		cwidth = 20;
 		cheight = 20;
 		
-		moveSpeed = 0.2;
+		moveSpeed = 0.3;
 		maxSpeed = 1.6;
 		stopSpeed = 0.4;
 		
@@ -76,16 +82,32 @@ public class Player extends MapObject {
 		health = maxHealth = 200;
 		mana = maxMana = 200;
 		
-		/*fireCost = 200;
-		fireBallDamage = 5;
-		fireBalls = new ArrayList<FireBall>(); */ //magic
+		castCostMagic1 = 20;
+		damageMagic1 = 25;
+		
+		castCostMagic2 = 40;
+		damageMagic2 = 50;
+		
+		castCostMagic3 = 100;
+		damageMagic3 = 130;
+		
+		castCostMagic4 = 200;
+		damageMagic4 = 300;
+		
+		castCostMagic5 = 150;
+		damageMagic5 = 250;
+		
+		castCostMagic6 = 50;
+		healMagic6 = 25;
+		
+		skills = new ArrayList<Skills>();
 		
 		slashDamage = 10;
 		slashRange = 40;
 		
 		// load sprites
 		try {
-			
+
 			BufferedImage spritesheet = ImageIO.read(
 				getClass().getResourceAsStream(
 					"/Sprites/Player/c1.png"
@@ -93,7 +115,7 @@ public class Player extends MapObject {
 			);
 			
 			sprites = new ArrayList<BufferedImage[]>();
-			for(int i = 0; i < 6; i++) { //play frame!!!!!
+			for(int i = 0; i < 4; i++) { 			//play frame
 				
 				BufferedImage[] bi =
 					new BufferedImage[numFrames[i]];
@@ -144,16 +166,34 @@ public class Player extends MapObject {
 	public int getMana() { return mana; }
 	public int getMaxMana() { return maxMana; }
 	
-	public void setCasting() { 
+	public void setCastingMagic1() { 
 		casting = true;
+		castingMagic1 = true;
+	}
+	public void setCastingMagic2() {
+		casting = true;
+		castingMagic2 = true;
+	}
+	public void setCastingMagic3() {
+		casting = true;
+		castingMagic3 = true;
+	}
+	public void setCastingMagic4() {
+		casting = true;
+		castingMagic4 = true;
+	}
+	public void setCastingMagic5() {
+		casting = true;
+		castingMagic5 = true;
+	}
+	public void setCastingMagic6() {
+		casting = true;
+		castingMagic6 = true;
 	}
 	public void setSlashing() {
 		slashing = true;
 	}
-	public void setCancelCasting(boolean b) { 
-		cancelcasting = b;
-	}
-	
+
 	/*public void checkAttack(ArrayList<Enemy> enemies) {
 		
 		// loop through enemies
@@ -212,6 +252,8 @@ public class Player extends MapObject {
 		flinchTimer = System.nanoTime();
 	} */
 	
+	//cannot move while attacking
+	
 	private void getNextPosition() {
 		
 		// movement
@@ -264,6 +306,9 @@ public class Player extends MapObject {
 					dy = 0;
 				}
 			}
+			if (currentAction == SLASHING) {
+					dx = 0;
+				}
 		}
 		
 	}
@@ -279,13 +324,84 @@ public class Player extends MapObject {
 		if(currentAction == SLASHING) {
 			if(animation.hasPlayedOnce()) slashing = false;
 		}
-		if(currentAction == CASTING || currentAction == SPELLING) {
+		if(currentAction == CASTING) {
+			castingMagic1 = false;
+			castingMagic2 = false;
+			castingMagic3 = false;
+			castingMagic4 = false;
+			castingMagic5 = false;
+			castingMagic6 = false;
 			if(animation.hasPlayedOnce()) casting = false;
 		}
 		
 		//Skills attack
+		mana += 1; // regen mana
+		if (mana > maxMana) mana = maxMana;
+		if (casting && currentAction != CASTING) {
+			if (casting == castingMagic1) {
+				currentMagic = 0;
+				if (mana > castCostMagic1) {
+					mana -= castCostMagic1;
+					Skills mg = new Skills(tileMap,facingRight,currentMagic);
+					mg.setPosition(x,y);
+					skills.add(mg);
+				}
+			}
+//			else if (casting == castingMagic2) {
+//				currentMagic = 1;
+//				if (mana > castCostMagic2) {
+//					mana -= castCostMagic2;
+//					Skills mg = new Skills(tileMap,facingRight,currentMagic);
+//					mg.setPosition(x,y);
+//					skills.add(mg);
+//				}
+//			}
+//			else if (casting == castingMagic3) {
+//				currentMagic = 2;
+//				if (mana > castCostMagic3) {
+//					mana -= castCostMagic3;
+//					Skills mg = new Skills(tileMap,facingRight,currentMagic);
+//					mg.setPosition(x,y);
+//					skills.add(mg);
+//				}
+//			}
+//			else if (casting == castingMagic4) {
+//				currentMagic = 3;
+//				if (mana > castCostMagic4) {
+//					mana -= castCostMagic4;
+//					Skills mg = new Skills(tileMap,facingRight,currentMagic);
+//					mg.setPosition(x,y);
+//					skills.add(mg);
+//				}
+//			}
+//			else if (casting == castingMagic5) {
+//				currentMagic = 4;
+//				if (mana > castCostMagic5) {
+//					mana -= castCostMagic5;
+//					Skills mg = new Skills(tileMap,facingRight,currentMagic);
+//					mg.setPosition(x,y);
+//					skills.add(mg);
+//				}
+//			}
+//			else if (casting == castingMagic6) {
+//				currentMagic = 5;
+//				if (mana > castCostMagic6) {
+//					mana -= castCostMagic6;
+//					Skills mg = new Skills(tileMap,facingRight,currentMagic);
+//					mg.setPosition(x,y);
+//					skills.add(mg);
+//				}
+//			}
+		}
 		
 		//update skills
+		for(int i=0;i<skills.size();i++) {
+			skills.get(i).update();
+			if(skills.get(i).shouldRemove()) {
+				skills.remove(i);
+				i--;
+			}
+		}
 		
 		// check done flinching
 		if(flinching) {
@@ -306,21 +422,53 @@ public class Player extends MapObject {
 				width = 100;
 			}
 		}
-		else if(casting) {
+		else if (castingMagic1) {
 			if(currentAction != CASTING) {
 				currentAction = CASTING;
 				animation.setFrames(sprites.get(CASTING));
-				animation.setDelay(100);
-				width = 30;
-				/*if (currentAction != SPELLING) {
-					currentAction = SPELLING;
-					//if (skills ==) {
-					animation.setFrame(sprites.get(SPELLING);
-					animation.setDelay(100);
-					width = 30
-					}
-				}*/
+				animation.setDelay(300);
+				width = 50;
 			}
+		}
+		else if (castingMagic2) {
+			if(currentAction != CASTING) {
+				currentAction = CASTING;
+				animation.setFrames(sprites.get(CASTING));
+				animation.setDelay(40);
+				width = 50;
+			}
+		}
+		else if (castingMagic3) {
+			if(currentAction != CASTING) {
+				currentAction = CASTING;
+				animation.setFrames(sprites.get(CASTING));
+				animation.setDelay(50);
+				width = 50;
+			}
+		}
+		else if (castingMagic4) {
+			if(currentAction != CASTING) {
+				currentAction = CASTING;
+				animation.setFrames(sprites.get(CASTING));
+				animation.setDelay(200);
+				width = 50;
+			}
+		}
+		else if (castingMagic5) {
+			if(currentAction != CASTING) {
+				currentAction = CASTING;
+				animation.setFrames(sprites.get(CASTING));
+				animation.setDelay(150);
+				width = 50;
+			}
+		}
+		else if (castingMagic6) {
+			if(currentAction != CASTING) {
+				currentAction = CASTING;
+				animation.setFrames(sprites.get(CASTING));
+				animation.setDelay(25);
+				width = 50;
+				}
 		}
 		else if(left || right || up || down) {
 			if(currentAction != WALKING) {
@@ -346,7 +494,6 @@ public class Player extends MapObject {
 			if(right) facingRight = true;
 			if(left) facingRight = false;
 		}
-		
 	}
 	
 	public void draw(Graphics2D g) {
@@ -354,9 +501,9 @@ public class Player extends MapObject {
 		setMapPosition();
 		
 		// draw skills
-		/*for(int i = 0; i < skills.size(); i++) {
+		for(int i = 0; i < skills.size(); i++) {
 			skills.get(i).draw(g);
-		}*/
+		}
 		
 		// draw player
 		if(flinching) {
@@ -372,20 +519,3 @@ public class Player extends MapObject {
 	}
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -77,13 +77,13 @@ public class LevelState extends GameState {
 		if(k == KeyEvent.VK_UP) player.setUp(true);
 		if(k == KeyEvent.VK_DOWN) player.setDown(true);
 		if(k == KeyEvent.VK_D) player.setSlashing();
-		/*if(k == KeyEvent.VK_1) player.setSkill1();
-		if(k == KeyEvent.VK_2) player.setSkill2();
-		if(k == KeyEvent.VK_3) player.setSkill3();
-		if(k == KeyEvent.VK_4) player.setSkill4();
-		if(k == KeyEvent.VK_5) player.setSkill5();
-		if(k == KeyEvent.VK_6) player.setSkill6();
-		if(k == KeyEvent.VK_PAUSE) player.setPause(true);*/	
+		if(k == KeyEvent.VK_1) player.setCastingMagic1();
+//		if(k == KeyEvent.VK_2) player.setCastingMagic2();
+//		if(k == KeyEvent.VK_3) player.setCastingMagic3();
+//		if(k == KeyEvent.VK_4) player.setCastingMagic4();
+//		if(k == KeyEvent.VK_5) player.setCastingMagic5();
+//		if(k == KeyEvent.VK_6) player.setCastingMagic6();
+		//if(k == KeyEvent.VK_PAUSE) player.setPause(true);
 	}
 	
 	public void keyReleased(int k) {
