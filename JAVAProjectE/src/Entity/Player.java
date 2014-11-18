@@ -39,7 +39,7 @@ public class Player extends MapObject {
 	// animations
 	private ArrayList<BufferedImage[]> sprites;
 	private final int[] numFrames = {
-		1 ,4 ,9 ,6 ,7 ,5 //how many of frame of each action
+		1 ,6 ,9 ,6 ,7 ,5 //how many of frame of each action
 	};
 	
 	// animation actions
@@ -62,12 +62,12 @@ public class Player extends MapObject {
 		
 		super(tm);
 		
-		width = 60;
+		width = 50;
 		height = 60;
 		cwidth = 20;
 		cheight = 20;
 		
-		moveSpeed = 0.3;
+		moveSpeed = 0.2;
 		maxSpeed = 1.6;
 		stopSpeed = 0.4;
 		
@@ -88,7 +88,7 @@ public class Player extends MapObject {
 			
 			BufferedImage spritesheet = ImageIO.read(
 				getClass().getResourceAsStream(
-					"/Sprites/Player/Character.gif"
+					"/Sprites/Player/c1.png"
 				)
 			);
 			
@@ -327,7 +327,7 @@ public class Player extends MapObject {
 				currentAction = WALKING;
 				animation.setFrames(sprites.get(WALKING));
 				animation.setDelay(160);
-				width = 60;
+				width = 50;
 			}
 		}
 		else {
@@ -335,7 +335,7 @@ public class Player extends MapObject {
 				currentAction = IDLE;
 				animation.setFrames(sprites.get(IDLE));
 				animation.setDelay(400);
-				width = 60;
+				width = 50;
 			}
 		}
 		
