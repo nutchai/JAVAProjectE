@@ -327,7 +327,7 @@ public class Player extends MapObject {
 				currentAction = WALKING;
 				animation.setFrames(sprites.get(WALKING));
 				animation.setDelay(160);
-				width = 30;
+				width = 60;
 			}
 		}
 		else {
@@ -335,7 +335,7 @@ public class Player extends MapObject {
 				currentAction = IDLE;
 				animation.setFrames(sprites.get(IDLE));
 				animation.setDelay(400);
-				width = 30;
+				width = 60;
 			}
 		}
 		
@@ -345,8 +345,6 @@ public class Player extends MapObject {
 		if(currentAction != SLASHING && currentAction != CASTING) {
 			if(right) facingRight = true;
 			if(left) facingRight = false;
-			if(up) facingRight = true;
-			if(down) facingRight = true;
 		}
 		
 	}

@@ -59,6 +59,49 @@ public class TileMap {
 			
 			BufferedImage subimage;
 			for(int col = 0; col < numTilesAcross; col++) {
+				if(col==1||col==numTilesAcross-1){
+				subimage = tileset.getSubimage(col * tileSize,0,tileSize,tileSize);
+				tiles[0][col] = new Tile(subimage, Tile.UNWALKABLE);
+				subimage = tileset.getSubimage(col * tileSize,tileSize,tileSize,tileSize);
+				tiles[1][col] = new Tile(subimage, Tile.UNWALKABLE);
+				subimage = tileset.getSubimage(col * tileSize,tileSize*2,tileSize,tileSize);
+				tiles[2][col] = new Tile(subimage, Tile.UNWALKABLE);
+				subimage = tileset.getSubimage(col * tileSize,tileSize*3,tileSize,tileSize);
+				tiles[3][col] = new Tile(subimage, Tile.UNWALKABLE);
+				subimage = tileset.getSubimage(col * tileSize,tileSize*4,tileSize,tileSize);
+				tiles[4][col] = new Tile(subimage, Tile.UNWALKABLE);
+				subimage = tileset.getSubimage(col * tileSize,tileSize*5,tileSize,tileSize);
+				tiles[5][col] = new Tile(subimage, Tile.UNWALKABLE);
+				subimage = tileset.getSubimage(col * tileSize,tileSize*6,tileSize,tileSize);
+				tiles[6][col] = new Tile(subimage, Tile.UNWALKABLE);
+				subimage = tileset.getSubimage(col * tileSize,tileSize*7,tileSize,tileSize);
+				tiles[7][col] = new Tile(subimage, Tile.UNWALKABLE);
+				subimage = tileset.getSubimage(col * tileSize,tileSize*8,tileSize,tileSize);
+				tiles[8][col] = new Tile(subimage, Tile.UNWALKABLE);
+				subimage = tileset.getSubimage(col * tileSize,tileSize*9,tileSize,tileSize);
+				tiles[9][col] = new Tile(subimage, Tile.UNWALKABLE);
+				subimage = tileset.getSubimage(col * tileSize,tileSize*10,tileSize,tileSize);
+				tiles[10][col] = new Tile(subimage, Tile.UNWALKABLE);
+				subimage = tileset.getSubimage(col * tileSize,tileSize*11,tileSize,tileSize);
+				tiles[11][col] = new Tile(subimage, Tile.UNWALKABLE);
+				subimage = tileset.getSubimage(col * tileSize,tileSize*12,tileSize,tileSize);
+				tiles[12][col] = new Tile(subimage, Tile.UNWALKABLE);
+				subimage = tileset.getSubimage(col * tileSize,tileSize*13,tileSize,tileSize);
+				tiles[13][col] = new Tile(subimage, Tile.UNWALKABLE);
+				subimage = tileset.getSubimage(col * tileSize,tileSize*14,tileSize,tileSize);
+				tiles[14][col] = new Tile(subimage, Tile.UNWALKABLE);
+				subimage = tileset.getSubimage(col * tileSize,tileSize*15,tileSize,tileSize);
+				tiles[15][col] = new Tile(subimage, Tile.UNWALKABLE);
+				subimage = tileset.getSubimage(col * tileSize,tileSize*16,tileSize,tileSize);
+				tiles[16][col] = new Tile(subimage, Tile.UNWALKABLE);
+				subimage = tileset.getSubimage(col * tileSize,tileSize*17,tileSize,tileSize);
+				tiles[17][col] = new Tile(subimage, Tile.UNWALKABLE);
+				subimage = tileset.getSubimage(col * tileSize,tileSize*18,tileSize,tileSize);
+				tiles[18][col] = new Tile(subimage, Tile.UNWALKABLE);
+				subimage = tileset.getSubimage(col * tileSize,tileSize*19,tileSize,tileSize);
+				tiles[19][col] = new Tile(subimage, Tile.UNWALKABLE);
+				}
+				else{
 				subimage = tileset.getSubimage(col * tileSize,0,tileSize,tileSize);
 				tiles[0][col] = new Tile(subimage, Tile.UNWALKABLE);
 				subimage = tileset.getSubimage(col * tileSize,tileSize,tileSize,tileSize);
@@ -99,6 +142,7 @@ public class TileMap {
 				tiles[18][col] = new Tile(subimage, Tile.UNWALKABLE);
 				subimage = tileset.getSubimage(col * tileSize,tileSize*19,tileSize,tileSize);
 				tiles[19][col] = new Tile(subimage, Tile.UNWALKABLE);
+				}
 			}
 			
 		}
