@@ -378,8 +378,8 @@ public class Player extends MapObject {
 				if (mana > castCostMagic2) {
 					mana -= castCostMagic2;
 					Skills mg = new Skills(tileMap,facingRight,currentMagic);
-					if (facingRight) mg.setPosition(x+100,y-height+30);
-					else mg.setPosition(x-100,y-height+30);
+					if (facingRight) mg.setPosition(x+100,y-(height/2));
+					else mg.setPosition(x-100,y-(height/2));
 					magics.add(mg);
 				}
 			}
@@ -388,7 +388,8 @@ public class Player extends MapObject {
 				if (mana > castCostMagic3) {
 					mana -= castCostMagic3;
 					Skills mg = new Skills(tileMap,facingRight,currentMagic);
-					mg.setPosition(x,y-height);
+					if (facingRight) mg.setPosition(x+height,y);
+					else mg.setPosition(x-height,y);
 					magics.add(mg);
 				}
 			}
@@ -397,7 +398,9 @@ public class Player extends MapObject {
 				if (mana > castCostMagic4) {
 					mana -= castCostMagic4;
 					Skills mg = new Skills(tileMap,facingRight,currentMagic);
-					mg.setPosition(x,y-height);
+					//mg.setPosition(x,y+(height/2));
+					if (facingRight) mg.setPosition(x+100,y-(height/4));
+					else mg.setPosition(x-100,y-(height/4));
 					magics.add(mg);
 				}
 			}
@@ -406,7 +409,8 @@ public class Player extends MapObject {
 				if (mana > castCostMagic5) {
 					mana -= castCostMagic5;
 					Skills mg = new Skills(tileMap,facingRight,currentMagic);
-					mg.setPosition(x,y-height);
+					if (facingRight) mg.setPosition(x+100,y);
+					else mg.setPosition(x-100,y);
 					magics.add(mg);
 				}
 			}

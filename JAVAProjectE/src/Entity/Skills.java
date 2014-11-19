@@ -211,10 +211,11 @@ public class Skills extends MapObject {
 	
 	public void setHit() {
 		if(hit) return;
-		hit = true;
+		hit = true;	
 		animation.setFrames(hitSprites);
 		animation.setDelay(70);
 		dx = 0;
+		dy = 0;
 	}
 
 	public boolean shouldRemove() { return remove; }
