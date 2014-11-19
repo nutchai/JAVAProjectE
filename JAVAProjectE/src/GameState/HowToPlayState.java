@@ -19,7 +19,7 @@ public class HowToPlayState extends GameState{
 		this.gsm = gsm;
 		
 		try {
-			bg = new Background("/Backgrounds/",1); // first page
+			bg = new Background("/Backgrounds/HTP1.png",1); // first page
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -39,17 +39,23 @@ public class HowToPlayState extends GameState{
 
 	public void keyPressed(int k) {
 		if(k == KeyEvent.VK_LEFT) {
-			currentChoice--;
-			bg = new Background("/Backgrounds/",1); // second page
-			if(currentChoice == -1) {
-				currentChoice = images.length - 1;
+			if(currentChoice == 0) {
+				currentChoice = 1;
+				bg = new Background("/Backgrounds/HTP2.png",1);
+			}
+			else {
+				currentChoice--;
+				bg = new Background("/Backgrounds/HTP1.png",1);
 			}
 		}
 		if(k == KeyEvent.VK_RIGHT) {
-			currentChoice++;
-			bg = new Background("/Backgrounds/",1); // first page
-			if(currentChoice == images.length) {
+			if(currentChoice == 0) {
+				currentChoice++;
+				bg = new Background("/Backgrounds/HTP2.png",1);
+			}
+			else {
 				currentChoice = 0;
+				bg = new Background("/Backgrounds/HTP1.png",1);
 			}
 		}
 		if(k == KeyEvent.VK_ENTER) {

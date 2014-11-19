@@ -41,6 +41,7 @@ public class LevelState extends GameState {
 		enemies.add(skull);
 		
 		hud = new HUD(player);
+		
 	}
 	
 	
@@ -72,9 +73,11 @@ public class LevelState extends GameState {
 		// update monster position
 		skull.getmonxy(skull.getx(),skull.gety());
 		
-		if (player.dead == true) {
+		// dead
+		if (player.dead) {
 			gsm.setState(GameStateManager.DEADSTATE);
 		}
+		
 	}
 	
 	public void draw(Graphics2D g) {
@@ -90,13 +93,13 @@ public class LevelState extends GameState {
 		player.draw(g);
 		
 		// draw monster
-		for(int i =0 ;i<enemies.size();i++){
+		for(int i=0 ;i<enemies.size();i++){
 			enemies.get(i).draw(g);
 		}
 		
 		// draw hud
 		hud.draw(g);
-		
+
 	}
 	
 	public void keyPressed(int k) {

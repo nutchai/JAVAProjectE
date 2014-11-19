@@ -43,8 +43,8 @@ public class Skull extends Enemy{
 		// load Sprites
 		width = 50;
 		height = 60;
-		cwidth = 20;
-		cheight = 20;
+		cwidth = 50;
+		cheight = 30;
 		try{
 			BufferedImage spritesheet = ImageIO.read(getClass().getResourceAsStream("/Sprites/Enemies/en1.png"));
 			sprites = new ArrayList<BufferedImage[]>();
@@ -117,7 +117,7 @@ public class Skull extends Enemy{
 		setPosition(xtemp,ytemp);
 		animation.update();
 		
-		 if((mx-x<40&&mx-x>-40&&my-y<20&&my-y>-20)) {
+		 if(mx-x<50&&mx-x>-50) {
 				if(currentAction != ATK) {
 					currentAction = ATK;
 					isatk=true;
