@@ -37,7 +37,7 @@ public class Skull extends Enemy{
 		moveSpeed = 0.8;
 		maxSpeed = 0.8;
 		
-		health = maxHealth = 1;
+		health = maxHealth = 5000;
 		damage = 10;
 		atkrange = 20;
 		// load Sprites

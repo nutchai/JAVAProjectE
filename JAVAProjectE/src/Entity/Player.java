@@ -115,7 +115,7 @@ public class Player extends MapObject {
 //		magics = new ArrayList<Skills>();
 		
 		slashDamage = 10;
-		slashRange = 60;
+		slashRange = 55;
 		
 		
 		
@@ -245,8 +245,8 @@ public class Player extends MapObject {
 	
 	public void hit(int damage) {
 		if(flinching) return;
-		if(facingRight){dx-=10;}
-		else{dx+=10;}
+		if(facingRight){dx-=7;}
+		else{dx+=7;}
 		health -= damage;
 		if(health < 0) health = 0;
 		if(health == 0) dead = true;
