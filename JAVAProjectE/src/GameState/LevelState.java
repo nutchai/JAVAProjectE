@@ -34,6 +34,9 @@ public class LevelState extends GameState {
 		
 		player = new Player(tileMap);
 		player.setPosition(350, 350);
+		if (player.dead == true) {
+			gsm.setState(GameStateManager.DEADSTATE);
+		}
 		
 		enemies = new ArrayList<Enemy>();
 		skull = new Skull(tileMap);

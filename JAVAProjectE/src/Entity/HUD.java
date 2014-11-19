@@ -6,12 +6,13 @@ import javax.imageio.ImageIO;
 
 public class HUD {
 	
-	private double currentHealth;
-	private double currentMana;
-	
 	private Player player;
 	
 	private BufferedImage image;
+	private Font font;
+	
+	private double currentHealth;
+	private double currentMana;
 	
 	public HUD(Player p) {
 		player = p;
@@ -21,6 +22,7 @@ public class HUD {
 					"/HUD/HUD.png"
 				)
 			);
+			font = new Font("Arial Rounded MT Bold", Font.PLAIN, 10);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -31,10 +33,26 @@ public class HUD {
 		
 		g.drawImage(image, 0, 10, null);
 		
-		// draw current Health & Mana
+		// draw background of Health & Mana slots
+		g.setColor(Color.BLACK);
+		g.fillRect(
+			12,
+			24,
+			224,
+			11
+		);
+		g.fillRect(
+			12,
+			51,
+			224,
+			11
+		);
+		
+		// current Health & Mana
 		currentHealth = (player.getHealth()/player.getMaxHealth());
 		currentMana = (player.getMana()/player.getMaxMana());
 		
+		// draw Health
 		g.setColor(Color.RED);
 		g.fillRect(
 			12,
@@ -42,13 +60,28 @@ public class HUD {
 			(int) (currentHealth*224),
 			11
 		);
+		g.setFont(font);
+		g.setColor(Color.WHITE);
+		g.drawString(
+			(int) (player.getHealth()) + "/" + (int) (player.getMaxHealth()),
+			105,
+			33
+		);
+		
+		// draw Mana
 		g.setColor(Color.BLUE);
 		g.fillRect(
 			12,
 			51,
 			(int) (currentMana*224),
 			11
-			);
+		);
+		g.setColor(Color.WHITE);
+		g.drawString(
+			(int) (player.getMana()) + "/" + (int) (player.getMaxMana()),
+			105,
+			60
+		);
 
 	}
 	

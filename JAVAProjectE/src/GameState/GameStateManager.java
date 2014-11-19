@@ -10,6 +10,8 @@ public class GameStateManager {
 	
 	public static final int MENUSTATE = 0;
 	public static final int LEVELSTATE = 1;
+	public static final int DEADSTATE = 2;
+	public static final int HTPSTATE = 3;
 	
 	public GameStateManager() {
 		
@@ -17,7 +19,7 @@ public class GameStateManager {
 		
 		currentState = MENUSTATE;
 		gameStates.add(new MenuState(this));
-		gameStates.add((new LevelState(this)));
+		gameStates.add(new LevelState(this));
 		
 	}
 	

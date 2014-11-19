@@ -19,7 +19,8 @@ public class Player extends MapObject {
 	private double maxHealth;
 	private double mana;
 	private double maxMana;
-	private boolean dead;
+	private int level;
+	public boolean dead;
 	private boolean flinching;
 	private long flinchTimer;
 	
@@ -43,6 +44,12 @@ public class Player extends MapObject {
 	private int damageMagic4;
 	private int damageMagic5;
 	private int healMagic6;
+	private int stackMagic1;
+	private int stackMagic2;
+	private int stackMagic3;
+	private int stackMagic4;
+	private int stackMagic5;
+	private int stackMagic6;
 	private ArrayList<Skills> magics;
 	
 	// Slash
@@ -70,6 +77,8 @@ public class Player extends MapObject {
 //	private int fireCost;
 //	private int fireBallDamage;
 //	private ArrayList<FireBall> fireBalls;
+	
+	private Font font;
 	
 	//private HashMap<String, AudioPlayer> sfx;
 	
@@ -110,12 +119,21 @@ public class Player extends MapObject {
 		healMagic6 = 75;
 		magics = new ArrayList<Skills>();
 		
+		stackMagic1 = 0;
+		stackMagic2 = 0;
+		stackMagic3 = 0;
+		stackMagic4 = 0;
+		stackMagic5 = 0;
+		stackMagic6 = 0;
+		
 		slashDamage = 10;
 		slashRange = 60;
 		
+		level = 1;
+		
 		// load sprites
 		try {
-
+			
 			BufferedImage spritesheet = ImageIO.read(
 				getClass().getResourceAsStream(
 					"/Sprites/Player/c1.png"
@@ -154,6 +172,9 @@ public class Player extends MapObject {
 				sprites.add(bi);
 				
 			}
+			
+			// Font
+			font = new Font("Arial Rounded MT Bold", Font.PLAIN, 20);
 			
 		}
 		catch(Exception e) {
@@ -204,6 +225,9 @@ public class Player extends MapObject {
 	}
 	public void setSlashing() {
 		slashing = true;
+	}
+	public void setDead() {
+		dead = true;
 	}
 //	public void setFiring() {
 //		firing = true;
@@ -361,13 +385,19 @@ public class Player extends MapObject {
 //		}
 		
 		//Skills attack
-		mana += 0.1; // regen mana
+		mana += 0.05; // regen mana
 		if (mana > maxMana) { mana = maxMana; }
 		if (casting && currentAction != CASTING) {
 			if (casting == castingMagic1) {
 				currentMagic = 0;
 				if (mana > castCostMagic1) {
 					mana -= castCostMagic1;
+					stackMagic1 += 1;
+					if (stackMagic1 == 10) {
+						stackMagic1 = 0;
+						castCostMagic1 += 4;
+						damageMagic1 += 8;
+					}
 					Skills mg = new Skills(tileMap,facingRight,currentMagic);
 					mg.setPosition(x,y);
 					magics.add(mg);
@@ -377,6 +407,12 @@ public class Player extends MapObject {
 				currentMagic = 1;
 				if (mana > castCostMagic2) {
 					mana -= castCostMagic2;
+					stackMagic2 += 1;
+					if (stackMagic2 == 10) {
+						stackMagic2 = 0;
+						castCostMagic2 += 8;
+						damageMagic2 += 20;
+					}
 					Skills mg = new Skills(tileMap,facingRight,currentMagic);
 					if (facingRight) mg.setPosition(x+100,y-(height/2));
 					else mg.setPosition(x-100,y-(height/2));
@@ -387,6 +423,12 @@ public class Player extends MapObject {
 				currentMagic = 2;
 				if (mana > castCostMagic3) {
 					mana -= castCostMagic3;
+					stackMagic3 += 1;
+					if (stackMagic3 == 10) {
+						stackMagic3 = 0;
+						castCostMagic3 += 6;
+						damageMagic3 += 10;
+					}
 					Skills mg = new Skills(tileMap,facingRight,currentMagic);
 					if (facingRight) mg.setPosition(x+height,y);
 					else mg.setPosition(x-height,y);
@@ -397,8 +439,13 @@ public class Player extends MapObject {
 				currentMagic = 3;
 				if (mana > castCostMagic4) {
 					mana -= castCostMagic4;
+					stackMagic4 += 1;
+					if (stackMagic4 == 10) {
+						stackMagic4 = 0;
+						castCostMagic4 += 30;
+						damageMagic4 += 100;
+					}
 					Skills mg = new Skills(tileMap,facingRight,currentMagic);
-					//mg.setPosition(x,y+(height/2));
 					if (facingRight) mg.setPosition(x+100,y-(height/4));
 					else mg.setPosition(x-100,y-(height/4));
 					magics.add(mg);
@@ -408,6 +455,12 @@ public class Player extends MapObject {
 				currentMagic = 4;
 				if (mana > castCostMagic5) {
 					mana -= castCostMagic5;
+					stackMagic5 += 1;
+					if (stackMagic5 == 10) {
+						stackMagic5 = 0;
+						castCostMagic5 += 40;
+						damageMagic5 += 150;
+					}
 					Skills mg = new Skills(tileMap,facingRight,currentMagic);
 					if (facingRight) mg.setPosition(x+100,y);
 					else mg.setPosition(x-100,y);
@@ -418,6 +471,12 @@ public class Player extends MapObject {
 				currentMagic = 5;
 				if (mana > castCostMagic6) {
 					mana -= castCostMagic6;
+					stackMagic6 += 1;
+					if (stackMagic6 == 10) {
+						stackMagic6 = 0;
+						castCostMagic6 += 12;
+						healMagic6 += 10;
+					}
 					Skills mg = new Skills(tileMap,facingRight,currentMagic);
 					mg.setPosition(x,y);
 					magics.add(mg);
@@ -550,6 +609,13 @@ public class Player extends MapObject {
 				return;
 			}
 		}
+		
+		g.setFont(font);
+		g.drawString(
+				"LEVEL : " + level,
+				10,
+				95
+			);
 		
 		super.draw(g);
 		

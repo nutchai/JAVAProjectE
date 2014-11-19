@@ -12,12 +12,9 @@ private Background bg;
 	private int currentChoice = 0;
 	private String[] options = {
 		"Start",
-		"Tutorial",
+		"How To Play",
 		"Quit"
 	};
-	
-	private Color titleColor;
-	private Font titleFont;
 	
 	private Font font;
 	
@@ -28,8 +25,6 @@ private Background bg;
 		try {
 			
 			bg = new Background("/Backgrounds/backgroundmenu.jpg", 1);
-			
-			
 			
 			font = new Font("Berlin Sans FB Demi", Font.PLAIN, 50);    // menu font
 			
@@ -71,7 +66,7 @@ private Background bg;
 			gsm.setState(GameStateManager.LEVELSTATE);
 		}
 		if(currentChoice == 1) {
-			// help
+			gsm.setState(GameStateManager.HTPSTATE);
 		}
 		if(currentChoice == 2) {
 			System.exit(0);
