@@ -31,28 +31,13 @@ public class HUD {
 		
 		g.drawImage(image, 0, 10, null);
 		
-		// draw empty Health & Mana
-//		g.setColor(Color.WHITE);
-//		g.fillRect(
-//			13,
-//			24,
-//			224,
-//			11
-//		); //13,24,"224",11
-//		g.fillRect(
-//			13, 
-//			52, 
-//			224,
-//			11
-//		); //13,52,224,11
-		
 		// draw current Health & Mana
 		currentHealth = (player.getHealth()/player.getMaxHealth());
 		currentMana = (player.getMana()/player.getMaxMana());
 		
 		g.setColor(Color.RED);
 		g.fillRect(
-			12, // 13-224
+			12,
 			24,
 			(int) (currentHealth*224),
 			11
@@ -60,7 +45,7 @@ public class HUD {
 		g.setColor(Color.BLUE);
 		g.fillRect(
 			12,
-			52,
+			51,
 			(int) (currentMana*224),
 			11
 			);
