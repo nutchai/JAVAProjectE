@@ -14,8 +14,6 @@ public class Skills extends MapObject {
 	
 	private boolean hit;
 	private boolean remove;
-	
-	// animations
 	private BufferedImage[] sprites;
 	private BufferedImage[] hitSprites;
 	
@@ -32,14 +30,35 @@ public class Skills extends MapObject {
 		
 		facingRight = right;
 		
-		moveSpeed = 3.8;
-		if(right) dx = moveSpeed;
-		else dx = -moveSpeed;
-		
 		width = 50;
 		height = 60;
 		cwidth = 14;
 		cheight = 14;
+		
+		if (currentMagic == MAGIC1 || currentMagic == MAGIC6) {
+			if (currentMagic == MAGIC1) moveSpeed = 5;
+			else moveSpeed = 0;
+			width *= 2;
+		}
+		else if (currentMagic == MAGIC2) {
+			moveSpeed = 0;
+			height *= 2;
+		}
+		else if (currentMagic == MAGIC3) {
+			moveSpeed = 7;
+			width *= 2;
+			height *= 2;
+		}
+		else if (currentMagic == MAGIC4 || currentMagic == MAGIC5) {
+			if (currentMagic == MAGIC5) moveSpeed = 3;
+			else moveSpeed = 0;
+			width *= 4;
+			height *= 2;
+		}
+			
+		if(right) dx = moveSpeed;
+		else dx = -moveSpeed;
+		
 		
 		// load sprites
 		try {
@@ -52,9 +71,9 @@ public class Skills extends MapObject {
 				sprites = new BufferedImage[5];
 				for(int i=0;i<sprites.length;i++) {
 					sprites[i] = spritesheet.getSubimage(
-						i * width * 2, 
-						height * 11,
-						width * 2,
+						i * width, 
+						height + (height*10),
+						width,
 						height
 					);
 				}
@@ -62,9 +81,9 @@ public class Skills extends MapObject {
 				hitSprites = new BufferedImage[5];
 				for(int i=0;i<sprites.length;i++) {
 					hitSprites[i] = spritesheet.getSubimage(
-						i * width * 2,
-						height * 11,
-						width * 2, 
+						i * width,
+						height + (height*10),
+						width, 
 						height
 					);
 				}
@@ -75,9 +94,9 @@ public class Skills extends MapObject {
 				for(int i=0;i<sprites.length;i++) {
 					sprites[i] = spritesheet.getSubimage(
 						i * width,
-						height * 2,
+						height,
 						width,
-						height * 2
+						height
 					);
 				}
 				
@@ -85,9 +104,9 @@ public class Skills extends MapObject {
 				for(int i=0;i<sprites.length;i++) {
 					hitSprites[i] = spritesheet.getSubimage(
 						i * width,
-						height * 2,
+						height,
 						width,
-						height * 2
+						height
 					);
 				}
 			}
@@ -96,20 +115,20 @@ public class Skills extends MapObject {
 				sprites = new BufferedImage[12];
 				for(int i=0;i<sprites.length;i++) {
 					sprites[i] = spritesheet.getSubimage(
-						i * width * 2,
-						height * 4,
-						width * 2,
-						height * 2
+						i * width,
+						height * 2,
+						width,
+						height
 					);
 				}
 				
 				hitSprites = new BufferedImage[12];
 				for(int i=0;i<sprites.length;i++) {
 					hitSprites[i] = spritesheet.getSubimage(
-						i * width * 2,
-						height * 4,
-						width * 2,
-						height * 2
+						i * width,
+						height * 2,
+						width,
+						height
 					);
 				}
 			}
@@ -118,20 +137,20 @@ public class Skills extends MapObject {
 				sprites = new BufferedImage[3];
 				for(int i=0;i<sprites.length;i++) {
 					sprites[i] = spritesheet.getSubimage(
-						i * width * 4,
-						height * 6,
-						width * 4,
-						height * 2
+						i * width,
+						height * 3,
+						width,
+						height
 					);
 				}
 				
 				hitSprites = new BufferedImage[3];
 				for(int i=0;i<sprites.length;i++) {
 					hitSprites[i] = spritesheet.getSubimage(
-						i * width * 4,
-						height * 6,
-						width * 4,
-						height * 2
+						i * width,
+						height * 3,
+						width,
+						height
 					);
 				}
 			}
@@ -140,20 +159,20 @@ public class Skills extends MapObject {
 				sprites = new BufferedImage[6];
 				for(int i=0;i<sprites.length;i++) {
 					sprites[i] = spritesheet.getSubimage(
-						i * width * 4,
-						height * 8,
-						width * 4,
-						height * 2
+						i * width,
+						height * 4,
+						width,
+						height
 					);
 				}
 				
 				hitSprites = new BufferedImage[6];
 				for(int i=0;i<sprites.length;i++) {
 					hitSprites[i] = spritesheet.getSubimage(
-						i * width * 4,
-						height * 8,
-						width * 4,
-						height * 2
+						i * width,
+						height * 4,
+						width,
+						height
 					);
 				}
 			}
@@ -162,9 +181,9 @@ public class Skills extends MapObject {
 				sprites = new BufferedImage[15];
 				for(int i=0;i<sprites.length;i++) {
 					sprites[i] = spritesheet.getSubimage(
-						i * width * 2,
+						i * width,
 						height * 10,
-						width * 2,
+						width,
 						height
 					);
 				}
@@ -172,80 +191,13 @@ public class Skills extends MapObject {
 				hitSprites = new BufferedImage[15];
 				for(int i=0;i<sprites.length;i++) {
 					hitSprites[i] = spritesheet.getSubimage(
-						i * width * 2,
+						i * width,
 						height * 10,
-						width * 2,
+						width,
 						height
 					);
 				}
 			}
-			
-//			sprites = new BufferedImage[7];
-//			for (int i=0;i<7;i++) {
-//				
-//				BufferedImage[] bi =
-//					new	BufferedImage[skillsFrames[i]];
-//				
-//				System.out.println("in loop i of print subimage");
-//				
-//				for (int j=0;j<skillsFrames[i];j++) {
-//					
-//					if(currentMagic == MAGIC1) {
-//						System.out.println("CM : " + currentMagic);
-//						bi[j] = spritesheet.getSubimage(
-//							j * width,
-//							0,
-//							width,
-//							height
-//						);
-//					}
-//					else if(currentMagic == MAGIC2) {
-//						System.out.println("CM : " + currentMagic);
-//						bi[j] = spritesheet.getSubimage(
-//							j * width,
-//							0,
-//							width,
-//							height
-//						);
-//					}
-//					else if(currentMagic == MAGIC3) {
-//						System.out.println("CM : " + currentMagic);
-//						bi[j] = spritesheet.getSubimage(
-//							j * width,
-//							0,
-//							width,
-//							height
-//						);
-//					}
-//					else if(currentMagic == MAGIC4) {
-//						System.out.println("CM : " + currentMagic);
-//						bi[j] = spritesheet.getSubimage(
-//							j * width,
-//							0,
-//							width,
-//							height
-//						);
-//					}
-//					else if(currentMagic == MAGIC5) {
-//						System.out.println("CM : " + currentMagic);
-//						bi[j] = spritesheet.getSubimage(
-//							j * width,
-//							0,
-//							width,
-//							height
-//						);
-//					}
-//					else if(currentMagic == MAGIC6) {
-//						System.out.println("CM : " + currentMagic);
-//						bi[j] = spritesheet.getSubimage(
-//							j * width,
-//							0,
-//							width,
-//							height
-//						);
-//					}
-//				}
-//			}
 			
 			animation = new Animation();
 			animation.setFrames(sprites);;
@@ -260,6 +212,8 @@ public class Skills extends MapObject {
 	public void setHit() {
 		if(hit) return;
 		hit = true;
+		animation.setFrames(hitSprites);
+		animation.setDelay(70);
 		dx = 0;
 	}
 
