@@ -11,9 +11,17 @@ import Entity.Player;
 import TileMap.TileMap;
 
 public class Skull extends Enemy{
-
+	private int x , y;
+	private int mx,my;
 	private BufferedImage[] sprites;
-	
+	public void getxy(int x,int y){
+		this.x = x;
+		this.y = y;
+	}
+	public void getmonxy(int mx,int my){
+		this.mx = mx;
+		this.my = my;
+	}
 	public Skull(TileMap tm) {
 		super(tm);
 		
@@ -50,30 +58,32 @@ public class Skull extends Enemy{
 	
 	public void getNextPosition(){
 		// movement
-		if(left) {
+		if(mx>x) {
 			dx -= moveSpeed;
 			if(dx < -maxSpeed) {
 				dx = -maxSpeed;
 			}
+			facingRight = false;
 		}
-		else if(right) {
+		else if(mx<x) {
 			dx += moveSpeed;
 			if(dx > maxSpeed) {
 				dx = maxSpeed;
 			}
+			facingRight = true;
 		}
-//		else if(up) {
-//			dy -= moveSpeed;
-//			if(dy < -maxSpeed) {
-//				dy = -maxSpeed;
-//			}
-//		}
-//		else if(down) {
-//			dy += moveSpeed;
-//			if(dy > maxSpeed) {
-//				dy = maxSpeed;
-//			}
-//		}
+		if(my>y) {
+			dy -= moveSpeed;
+			if(dy < -maxSpeed) {
+				dy = -maxSpeed;
+			}
+		}
+		else if(my<y) {
+			dy += moveSpeed;
+			if(dy > maxSpeed) {
+				dy = maxSpeed;
+			}
+		}
 		animation.update();
 	}
 	public void update(){

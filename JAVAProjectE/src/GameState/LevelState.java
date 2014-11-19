@@ -37,6 +37,7 @@ public class LevelState extends GameState {
 		
 		enemies = new ArrayList<Enemy>();
 		skull = new Skull(tileMap);
+		skull.setPosition(330, 250);
 		enemies.add(skull);
 	}
 	
@@ -50,6 +51,13 @@ public class LevelState extends GameState {
 		for(int i = 0 ;i<enemies.size();i++){
 			enemies.get(i).update();
 		}
+		
+		// update player position to monster
+		skull.getxy(player.getx(),player.gety());
+		
+
+		// update monster position
+		skull.getmonxy(skull.getx(),skull.gety());
 	}
 	
 	public void draw(Graphics2D g) {

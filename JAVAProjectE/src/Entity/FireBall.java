@@ -47,7 +47,7 @@ public class FireBall extends MapObject {
 				);
 			}
 			
-			hitSprites = new BufferedImage[6];
+			hitSprites = new BufferedImage[1];
 			for(int i = 0; i < hitSprites.length; i++) {
 				hitSprites[i] = spritesheet.getSubimage(
 					i * width * 4,

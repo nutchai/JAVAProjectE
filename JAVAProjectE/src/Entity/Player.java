@@ -80,7 +80,7 @@ public class Player extends MapObject {
 		cwidth = 20;
 		cheight = 20;
 		
-		moveSpeed = 0.3;
+		moveSpeed = 1.6;
 		maxSpeed = 1.6;
 		stopSpeed = 0.4;
 		
@@ -143,6 +143,7 @@ public class Player extends MapObject {
 								width,
 								height
 						);
+						
 					}
 					else {
 						bi[j] = spritesheet.getSubimage(
@@ -151,6 +152,7 @@ public class Player extends MapObject {
 								width * 2,
 								height
 						);
+						
 					}
 					
 				}
@@ -431,7 +433,7 @@ public class Player extends MapObject {
 			if(fire > fireCost) {
 				fire -= fireCost;
 				FireBall fb = new FireBall(tileMap, facingRight);
-				fb.setPosition(x,y-height);
+				fb.setPosition(x,y-25);
 				fireBalls.add(fb);
 			}
 		}
@@ -478,7 +480,7 @@ public class Player extends MapObject {
 				currentAction = FIREBALL;
 				animation.setFrames(sprites.get(FIREBALL));
 				animation.setDelay(100);
-				width = 60;
+				width = 50;
 			}
 		}
 //		else if (castingMagic1) {
