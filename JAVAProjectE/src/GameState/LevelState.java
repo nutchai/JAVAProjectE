@@ -58,7 +58,6 @@ public class LevelState extends GameState {
 				enemies.add(skull);
 			}
 		}
-		System.out.println(killcount);
 		
 		// attack Enemy
 		player.checkAttack(enemies);

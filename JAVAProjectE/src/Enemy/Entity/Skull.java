@@ -1,8 +1,10 @@
 package Enemy.Entity;
 
 import Entity.Enemy;
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -14,10 +16,13 @@ public class Skull extends Enemy{
 	private final int[] numFrames = {
 			8 ,5 //how many of frame of each action
 		};
+	private int atkrange;
+	private boolean isatk;
 	private int ATK=1;
+	private int WALK=0;
 	private int x , y;
 	private int mx,my;
-	private BufferedImage[] sprites;
+	private ArrayList<BufferedImage[]> sprites;
 	public void getxy(int x,int y){
 		this.x = x;
 		this.y = y;
@@ -34,6 +39,7 @@ public class Skull extends Enemy{
 		
 		health = maxHealth = 1;
 		damage = 10;
+		atkrange = 20;
 		// load Sprites
 		width = 50;
 		height = 60;
@@ -41,19 +47,30 @@ public class Skull extends Enemy{
 		cheight = 20;
 		try{
 			BufferedImage spritesheet = ImageIO.read(getClass().getResourceAsStream("/Sprites/Enemies/en1.png"));
-			sprites = new BufferedImage[8];
-		{
-			for(int i=0;i<sprites.length;i++){
-				sprites[i] = spritesheet.getSubimage(i*width, 0, width, height);
+			sprites = new ArrayList<BufferedImage[]>();
+			for(int i = 0; i < 2; i++) { 			//play frame
+				BufferedImage[] bi =
+				new BufferedImage[numFrames[i]];
+				for(int j = 0; j < numFrames[i]; j++) {
+					if(i != ATK) {
+						bi[j] = spritesheet.getSubimage(j * width,i * height,width,height);
+					}
+					else {
+						bi[j] = spritesheet.getSubimage(j * width * 2,i * height,width * 2,height);
+					}
+				}
+				
+				sprites.add(bi);
+				
 			}
-		}
 		
 		}
 		catch(Exception e){
 			e.printStackTrace();
 		}
+		currentAction = WALK;
 		animation = new Animation();
-		animation.setFrames(sprites);
+		animation.setFrames(sprites.get(WALK));
 		animation.setDelay(300);
 		
 		right = true;
@@ -91,11 +108,34 @@ public class Skull extends Enemy{
 		animation.update();
 	}
 	public void update(){
+		if(currentAction == ATK) {
+			if(animation.hasPlayedOnce()) isatk = false;
+		}
 		//update position
 		getNextPosition();
 		checkTileMapCollision();
 		setPosition(xtemp,ytemp);
 		animation.update();
+		
+		 if(mx-x<50&&mx-x>-50) {
+				if(currentAction != ATK) {
+					currentAction = ATK;
+					isatk=true;
+					animation.setFrames(sprites.get(ATK));
+					animation.setDelay(160);
+					width = 80;
+					maxSpeed =0;
+				}
+			}
+		else{
+			if(currentAction != WALK) {
+				currentAction = WALK;
+				animation.setFrames(sprites.get(WALK));
+				animation.setDelay(160);
+				width = 50;
+				maxSpeed = 0.8;
+			}
+		}
 	}
 	
 	public void draw(Graphics2D g){

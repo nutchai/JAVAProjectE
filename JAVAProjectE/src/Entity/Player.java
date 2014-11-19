@@ -115,13 +115,12 @@ public class Player extends MapObject {
 //		magics = new ArrayList<Skills>();
 		
 		slashDamage = 10;
-		slashRange = 40;
+		slashRange = 60;
 		
 		
 		
 		// load sprites
 		try {
-
 			BufferedImage spritesheet = ImageIO.read(getClass().getResourceAsStream("/Sprites/Player/c1.png"));
 			sprites = new ArrayList<BufferedImage[]>();
 			for(int i = 0; i < 4; i++) { 			//play frame
@@ -246,8 +245,8 @@ public class Player extends MapObject {
 	
 	public void hit(int damage) {
 		if(flinching) return;
-		if(facingRight){dx-=7;}
-		else{dx+=7;}
+		if(facingRight){dx-=10;}
+		else{dx+=10;}
 		health -= damage;
 		if(health < 0) health = 0;
 		if(health == 0) dead = true;
