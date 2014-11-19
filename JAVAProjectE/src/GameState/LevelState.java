@@ -34,9 +34,6 @@ public class LevelState extends GameState {
 		
 		player = new Player(tileMap);
 		player.setPosition(350, 350);
-		if (player.dead == true) {
-			gsm.setState(GameStateManager.DEADSTATE);
-		}
 		
 		enemies = new ArrayList<Enemy>();
 		skull = new Skull(tileMap);
@@ -74,6 +71,10 @@ public class LevelState extends GameState {
 
 		// update monster position
 		skull.getmonxy(skull.getx(),skull.gety());
+		
+		if (player.dead == true) {
+			gsm.setState(GameStateManager.DEADSTATE);
+		}
 	}
 	
 	public void draw(Graphics2D g) {
