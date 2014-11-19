@@ -15,12 +15,11 @@ import java.util.HashMap;
 public class Player extends MapObject {
 	
 	// player stuff
-	private int health;
-	private int maxHealth;
-	private long mana;
-	private long maxMana;
+	private double health;
+	private double maxHealth;
+	private double mana;
+	private double maxMana;
 	private boolean dead;
-	private boolean isflinch;
 	private boolean flinching;
 	private long flinchTimer;
 	
@@ -54,7 +53,7 @@ public class Player extends MapObject {
 	// animations
 	private ArrayList<BufferedImage[]> sprites;
 	private final int[] numFrames = {
-		4 ,6 ,4 ,2,1 //how many of frame of each action
+		4 ,6 ,4 ,2 //how many of frame of each action
 	};
 	
 	// animation actions
@@ -62,7 +61,6 @@ public class Player extends MapObject {
 	private static final int WALKING = 1;
 	private static final int SLASHING = 2;
 	private static final int CASTING = 3;
-	private static final int FLINCH = 4;
 //	private static final int FIREBALL = 3;
 	
 	// fireball
@@ -91,7 +89,7 @@ public class Player extends MapObject {
 		facingRight = true;
 		
 		health = maxHealth = 200;
-		mana = maxMana = 20000;
+		mana = maxMana = 200;
 		
 //		fire = maxFire = 2500;
 //		fireCost = 200;
@@ -173,10 +171,10 @@ public class Player extends MapObject {
 		
 	}
 	
-	public int getHealth() { return health; }
-	public int getMaxHealth() { return maxHealth; }
-	public long getMana() { return mana; }
-	public long getMaxMana() { return maxMana; }
+	public double getHealth() { return health; }
+	public double getMaxHealth() { return maxHealth; }
+	public double getMana() { return mana; }
+	public double getMaxMana() { return maxMana; }
 //	public int getFire() { return fire; }
 //	public int getMaxFire() { return maxFire; }
 	
@@ -462,7 +460,6 @@ public class Player extends MapObject {
 			long elapsed =
 				(System.nanoTime() - flinchTimer) / 1000000;
 			if(elapsed > 1000) {
-				isflinch = false;
 				flinching = false;
 			}
 		}
@@ -509,15 +506,6 @@ public class Player extends MapObject {
 				animation.setFrames(sprites.get(WALKING));
 				animation.setDelay(160);
 				width = 50;
-			}
-		}
-		else if(isflinch) {
-			if(currentAction != FLINCH) {
-				currentAction = FLINCH;
-				animation.setFrames(sprites.get(FLINCH));
-				animation.setDelay(160);
-				width = 50;
-				maxSpeed = 0;
 			}
 		}
 		else {

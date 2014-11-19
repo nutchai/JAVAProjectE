@@ -6,8 +6,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import Enemy.Entity.Skull;
-import Entity.Enemy;
-import Entity.Player;
+import Entity.*;
 import Main.GamePanel;
 import TileMap.TileMap;
 
@@ -18,6 +17,8 @@ public class LevelState extends GameState {
 	
 	private Player player;
 	private Skull skull;
+	
+	private HUD hud;
 	
 	public LevelState(GameStateManager gsm) {
 		this.gsm = gsm;
@@ -38,6 +39,8 @@ public class LevelState extends GameState {
 		skull = new Skull(tileMap);
 		skull.setPosition(330, 250);
 		enemies.add(skull);
+		
+		hud = new HUD(player);
 	}
 	
 	
@@ -86,6 +89,9 @@ public class LevelState extends GameState {
 		for(int i =0 ;i<enemies.size();i++){
 			enemies.get(i).draw(g);
 		}
+		
+		// draw hud
+		hud.draw(g);
 		
 	}
 	
