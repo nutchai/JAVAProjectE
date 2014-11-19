@@ -122,39 +122,18 @@ public class Player extends MapObject {
 		// load sprites
 		try {
 
-			BufferedImage spritesheet = ImageIO.read(
-				getClass().getResourceAsStream(
-					"/Sprites/Player/c1.png"
-				)
-			);
-			
+			BufferedImage spritesheet = ImageIO.read(getClass().getResourceAsStream("/Sprites/Player/c1.png"));
 			sprites = new ArrayList<BufferedImage[]>();
 			for(int i = 0; i < 4; i++) { 			//play frame
-				
 				BufferedImage[] bi =
-					new BufferedImage[numFrames[i]];
-				
+				new BufferedImage[numFrames[i]];
 				for(int j = 0; j < numFrames[i]; j++) {
-					
 					if(i != SLASHING) {
-						bi[j] = spritesheet.getSubimage(
-								j * width,
-								i * height,
-								width,
-								height
-						);
-						
+						bi[j] = spritesheet.getSubimage(j * width,i * height,width,height);
 					}
 					else {
-						bi[j] = spritesheet.getSubimage(
-								j * width * 2,
-								i * height,
-								width * 2,
-								height
-						);
-						
+						bi[j] = spritesheet.getSubimage(j * width * 2,i * height,width * 2,height);
 					}
-					
 				}
 				
 				sprites.add(bi);
@@ -215,7 +194,7 @@ public class Player extends MapObject {
 		firing = true;
 	}
 
-	/*public void checkAttack(ArrayList<Enemy> enemies) {
+	public void checkAttack(ArrayList<Enemy> enemies) {
 		
 		// loop through enemies
 		for(int i = 0; i < enemies.size(); i++) {
@@ -247,17 +226,18 @@ public class Player extends MapObject {
 			}
 			
 			// skills
-			for(int j = 0; j < skills.size(); j++) {
-				if(skills.get(j).intersects(e)) {
-					e.hit(spellDamage);
-					skills.get(j).setHit();
-					break;
-				}
-			}
+//			for(int j = 0; j < skills.size(); j++) {
+//				if(skills.get(j).intersects(e)) {
+//					e.hit(spellDamage);
+//					skills.get(j).setHit();
+//					break;
+//				}
+//			}
 			
 			// check enemy collision
 			if(intersects(e)) {
 				hit(e.getDamage());
+				
 			}
 			
 		}
@@ -266,12 +246,14 @@ public class Player extends MapObject {
 	
 	public void hit(int damage) {
 		if(flinching) return;
+		if(facingRight){dx-=7;}
+		else{dx+=7;}
 		health -= damage;
 		if(health < 0) health = 0;
 		if(health == 0) dead = true;
 		flinching = true;
 		flinchTimer = System.nanoTime();
-	} */
+	} 
 	
 	//cannot move while attacking
 	//----------
@@ -329,8 +311,7 @@ public class Player extends MapObject {
 				}
 			}
 			if (currentAction == SLASHING) {
-					dx = 0;
-					dy = 0;
+				maxSpeed =0;
 				}
 		}
 		
@@ -473,6 +454,7 @@ public class Player extends MapObject {
 				animation.setFrames(sprites.get(SLASHING));
 				animation.setDelay(90);
 				width = 100;
+				maxSpeed =0;
 			}
 		}
 		else if(firing) {
@@ -537,6 +519,7 @@ public class Player extends MapObject {
 				animation.setFrames(sprites.get(WALKING));
 				animation.setDelay(160);
 				width = 50;
+				maxSpeed =1.6;
 			}
 		}
 		else {
@@ -545,11 +528,11 @@ public class Player extends MapObject {
 				animation.setFrames(sprites.get(IDLE));
 				animation.setDelay(400);
 				width = 50;
+				maxSpeed =1.6;
 			}
 		}
 		
 		animation.update();
-		
 		// set direction
 		if(currentAction != SLASHING
 				&& currentAction != FIREBALL //CASTING

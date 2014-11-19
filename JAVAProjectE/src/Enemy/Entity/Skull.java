@@ -11,6 +11,10 @@ import Entity.Player;
 import TileMap.TileMap;
 
 public class Skull extends Enemy{
+	private final int[] numFrames = {
+			8 ,5 //how many of frame of each action
+		};
+	private int ATK=1;
 	private int x , y;
 	private int mx,my;
 	private BufferedImage[] sprites;
@@ -28,7 +32,7 @@ public class Skull extends Enemy{
 		moveSpeed = 0.8;
 		maxSpeed = 0.8;
 		
-		health = maxHealth = 20;
+		health = maxHealth = 1;
 		damage = 10;
 		// load Sprites
 		width = 50;
@@ -37,7 +41,7 @@ public class Skull extends Enemy{
 		cheight = 20;
 		try{
 			BufferedImage spritesheet = ImageIO.read(getClass().getResourceAsStream("/Sprites/Enemies/en1.png"));
-			sprites = new BufferedImage[2];
+			sprites = new BufferedImage[8];
 		{
 			for(int i=0;i<sprites.length;i++){
 				sprites[i] = spritesheet.getSubimage(i*width, 0, width, height);

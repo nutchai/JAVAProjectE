@@ -12,8 +12,7 @@ import Main.GamePanel;
 import TileMap.TileMap;
 
 public class LevelState extends GameState {
-	private int currentx;
-	private int currenty;
+	private int killcount;
 	private ArrayList<Enemy> enemies;
 	private TileMap tileMap;
 	
@@ -50,7 +49,19 @@ public class LevelState extends GameState {
 		// update monster
 		for(int i = 0 ;i<enemies.size();i++){
 			enemies.get(i).update();
+			if(enemies.get(i).isDead()){
+				killcount++;
+				enemies.remove(i);
+				i--;
+				skull = new Skull(tileMap);
+				skull.setPosition(330, 250);
+				enemies.add(skull);
+			}
 		}
+		System.out.println(killcount);
+		
+		// attack Enemy
+		player.checkAttack(enemies);
 		
 		// update player position to monster
 		skull.getxy(player.getx(),player.gety());
