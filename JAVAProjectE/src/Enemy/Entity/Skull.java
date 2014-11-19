@@ -117,7 +117,7 @@ public class Skull extends Enemy{
 		setPosition(xtemp,ytemp);
 		animation.update();
 		
-		 if(mx-x<50&&mx-x>-50) {
+		 if((mx-x<40&&mx-x>-40&&my-y<20&&my-y>-20)) {
 				if(currentAction != ATK) {
 					currentAction = ATK;
 					isatk=true;

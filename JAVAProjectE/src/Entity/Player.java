@@ -20,6 +20,7 @@ public class Player extends MapObject {
 	private long mana;
 	private long maxMana;
 	private boolean dead;
+	private boolean isflinch;
 	private boolean flinching;
 	private long flinchTimer;
 	
@@ -53,7 +54,7 @@ public class Player extends MapObject {
 	// animations
 	private ArrayList<BufferedImage[]> sprites;
 	private final int[] numFrames = {
-		4 ,6 ,4 ,2 //how many of frame of each action
+		4 ,6 ,4 ,2,1 //how many of frame of each action
 	};
 	
 	// animation actions
@@ -61,6 +62,7 @@ public class Player extends MapObject {
 	private static final int WALKING = 1;
 	private static final int SLASHING = 2;
 	private static final int CASTING = 3;
+	private static final int FLINCH = 4;
 //	private static final int FIREBALL = 3;
 	
 	// fireball
@@ -460,6 +462,7 @@ public class Player extends MapObject {
 			long elapsed =
 				(System.nanoTime() - flinchTimer) / 1000000;
 			if(elapsed > 1000) {
+				isflinch = false;
 				flinching = false;
 			}
 		}
@@ -506,6 +509,15 @@ public class Player extends MapObject {
 				animation.setFrames(sprites.get(WALKING));
 				animation.setDelay(160);
 				width = 50;
+			}
+		}
+		else if(isflinch) {
+			if(currentAction != FLINCH) {
+				currentAction = FLINCH;
+				animation.setFrames(sprites.get(FLINCH));
+				animation.setDelay(160);
+				width = 50;
+				maxSpeed = 0;
 			}
 		}
 		else {
