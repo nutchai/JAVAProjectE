@@ -688,11 +688,7 @@ public class Player extends MapObject {
 			magics.get(i).draw(g);
 		}
 		
-		// draw fireballs
-//		for(int i=0;i<fireBalls.size();i++) {
-//			fireBalls.get(i).draw(g);
-//		}
-		
+
 		// draw player
 		if(flinching) {
 			long elapsed =

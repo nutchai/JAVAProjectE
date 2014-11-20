@@ -53,8 +53,8 @@ public class LevelState extends GameState {
 	private Font font;
 	
 	public LevelState(GameStateManager gsm) {
-		bgMusic = new AudioPlayer("/Music/Audio.mp3");
-		bgMusic.play();
+//		bgMusic = new AudioPlayer("/Music/Audio.mp3");
+//		bgMusic.play();
 		this.gsm = gsm;
 		init();
 	}
