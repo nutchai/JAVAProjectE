@@ -235,6 +235,7 @@ public class LevelState extends GameState {
 		// draw hud
 		hud.draw(g);
 		g.setFont(font);
+		g.setColor(Color.BLACK);
 		g.drawString(""+killcount,350,80);
 
 	}

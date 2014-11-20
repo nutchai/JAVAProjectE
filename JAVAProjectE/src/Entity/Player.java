@@ -657,6 +657,7 @@ public class Player extends MapObject {
 				10,
 				95
 			);
+		g.setColor(Color.BLACK);
 		g.drawString(""+magic1lv,495,80);
 		g.drawString(""+magic2lv,535,80);
 		g.drawString(""+magic3lv,570,80);
