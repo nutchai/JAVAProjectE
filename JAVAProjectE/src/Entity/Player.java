@@ -109,7 +109,7 @@ public class Player extends MapObject {
 		
 		facingRight = true;
 		
-		health = maxHealth = 200;
+		health = maxHealth = 20;
 		mana = maxMana = 200;
 		
 //		fire = maxFire = 2500;
@@ -190,12 +190,15 @@ public class Player extends MapObject {
 			font = new Font("Arial Rounded MT Bold", Font.PLAIN, 20);
 			sfx = new HashMap<String,AudioPlayer>();
 			sfx.put("Slash",new AudioPlayer("/SFX/Slash.mp3"));
-			sfx.put("Skill1",new AudioPlayer("/Sounds/skill1.mp3"));
-			sfx.put("Skill2",new AudioPlayer("/Sounds/skill2.mp3"));
-			sfx.put("Skill3",new AudioPlayer("/Sounds/skill3.mp3"));
-			sfx.put("Skill4",new AudioPlayer("/Sounds/skill4.mp3"));
-			sfx.put("Skill5",new AudioPlayer("/Sounds/skill5.mp3"));
-			sfx.put("Skill6",new AudioPlayer("/Sounds/skill6.mp3"));
+			sfx.put("Skill1",new AudioPlayer("/Sounds/skill1.wav"));
+			sfx.put("Skill2",new AudioPlayer("/Sounds/skill2.wav"));
+			sfx.put("Skill3",new AudioPlayer("/Sounds/skill3.wav"));
+			sfx.put("Skill4",new AudioPlayer("/Sounds/skill4.wav"));
+			sfx.put("Skill5",new AudioPlayer("/Sounds/skill5.wav"));
+			sfx.put("Skill6",new AudioPlayer("/Sounds/skill6.wav"));
+			sfx.put("cantCast",new AudioPlayer("/Sounds/cantCast.wav"));
+			sfx.put("deadState",new AudioPlayer("/Sounds/deadState.wav"));
+			sfx.put("playerDamaged",new AudioPlayer("/Sounds/playerDamaged.wav"));
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -331,6 +334,7 @@ public class Player extends MapObject {
 		if(facingRight){dx-=7;}
 		else{dx+=7;}
 		health -= damage;
+		sfx.get("playerDamaged").play();
 		if(health < 0) health = 0;
 		if(health == 0) dead = true;
 		flinching = true;
@@ -487,6 +491,7 @@ public class Player extends MapObject {
 			if (casting == castingMagic1) {
 				currentMagic = 0;
 				if (mana > castCostMagic1) {
+					sfx.get("Skill1").play();
 					mana -= castCostMagic1;
 					stackMagic1 += 1;
 					if (stackMagic1 == 10) {
@@ -499,10 +504,12 @@ public class Player extends MapObject {
 					mg.setPosition(x,y);
 					magics.add(mg);
 				}
+				else sfx.get("cantCost").play();
 			}
 			else if (casting == castingMagic2) {
 				currentMagic = 1;
 				if (mana > castCostMagic2) {
+					sfx.get("Skill2").play();
 					mana -= castCostMagic2;
 					stackMagic2 += 1;
 					if (stackMagic2 == 10) {
@@ -516,10 +523,12 @@ public class Player extends MapObject {
 					else mg.setPosition(x-100,y-(height/2));
 					magics.add(mg);
 				}
+				else sfx.get("cantCost").play();
 			}
 			else if (casting == castingMagic3) {
 				currentMagic = 2;
 				if (mana > castCostMagic3) {
+					sfx.get("Skill3").play();
 					mana -= castCostMagic3;
 					stackMagic3 += 1;
 					if (stackMagic3 == 10) {
@@ -533,10 +542,12 @@ public class Player extends MapObject {
 					else mg.setPosition(x-height,y);
 					magics.add(mg);
 				}
+				else sfx.get("cantCost").play();
 			}
 			else if (casting == castingMagic4) {
 				currentMagic = 3;
 				if (mana > castCostMagic4) {
+					sfx.get("Skill4").play();
 					mana -= castCostMagic4;
 					stackMagic4 += 1;
 					if (stackMagic4 == 10) {
@@ -550,10 +561,12 @@ public class Player extends MapObject {
 					else mg.setPosition(x-100,y-(height/4));
 					magics.add(mg);
 				}
+				else sfx.get("cantCost").play();
 			}
 			else if (casting == castingMagic5) {
 				currentMagic = 4;
 				if (mana > castCostMagic5) {
+					sfx.get("Skill5").play();
 					mana -= castCostMagic5;
 					stackMagic5 += 1;
 					if (stackMagic5 == 10) {
@@ -567,10 +580,12 @@ public class Player extends MapObject {
 					else mg.setPosition(x-100,y);
 					magics.add(mg);
 				}
+				else sfx.get("cantCost").play();
 			}
 			else if (casting == castingMagic6) {
 				currentMagic = 5;
 				if (mana > castCostMagic6) {
+					sfx.get("Skill6").play();
 					mana -= castCostMagic6;
 					stackMagic6 += 1;
 					health+=healMagic6;
@@ -585,6 +600,7 @@ public class Player extends MapObject {
 					mg.setPosition(x,y);
 					magics.add(mg);
 				}
+				else sfx.get("cantCost").play();
 			}
 		}
 		
@@ -620,12 +636,6 @@ public class Player extends MapObject {
 		}
 		else if (casting) {
 				if(currentAction != CASTING) {
-					if (castingMagic1) sfx.get("Skill1").play();
-					if (castingMagic2) sfx.get("Skill2").play();
-					if (castingMagic3) sfx.get("Skill3").play();
-					if (castingMagic4) sfx.get("Skill4").play();
-					if (castingMagic5) sfx.get("Skill5").play();
-					if (castingMagic6) sfx.get("Skill6").play();
 					currentAction = CASTING;
 					animation.setFrames(sprites.get(CASTING));
 					animation.setDelay(300);
@@ -688,7 +698,6 @@ public class Player extends MapObject {
 			magics.get(i).draw(g);
 		}
 		
-
 		// draw player
 		if(flinching) {
 			long elapsed =

@@ -1,15 +1,28 @@
 package GameState;
 
 import TileMap.Background;
+import Audio.AudioPlayer;
+import GameState.LevelState;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 
 public class DeadState extends GameState{
 
+	LevelState ls;
+	
 	private Background bg;
 	
+	private Font font;
+	
+	private AudioPlayer bgMusic;
+	
 	public DeadState(GameStateManager gsm) {
+
+		bgMusic = new AudioPlayer("/Sounds/deadState.wav");
+		bgMusic.play();
+		
 		this.gsm = gsm;
 		
 		try {
@@ -29,6 +42,14 @@ public class DeadState extends GameState{
 	public void draw(Graphics2D g) {
 		// draw bg
 		bg.draw(g);
+		
+		font = new Font("Arial Rounded MT Bold", Font.PLAIN, 50);
+		
+		System.out.println(ls.killcount);
+		
+		g.setFont(font);
+		g.setColor(Color.GREEN);
+		g.drawString(""+ls.killcount,350,200);
 
 	}
 	

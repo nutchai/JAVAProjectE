@@ -15,7 +15,7 @@ import Main.GamePanel;
 import TileMap.TileMap;
 
 public class LevelState extends GameState {
-	private int killcount;
+	protected int killcount;
 	private ArrayList<Enemy> enemies;
 	private ArrayList<Enemy> enemies2;
 	private ArrayList<Enemy> enemies3;
@@ -53,8 +53,8 @@ public class LevelState extends GameState {
 	private Font font;
 	
 	public LevelState(GameStateManager gsm) {
-//		bgMusic = new AudioPlayer("/Music/Audio.mp3");
-//		bgMusic.play();
+		bgMusic = new AudioPlayer("/Music/Audio.mp3");
+		bgMusic.play();
 		this.gsm = gsm;
 		init();
 	}
@@ -88,7 +88,7 @@ public class LevelState extends GameState {
 		enemies4.add(skull4);
 		hud = new HUD(player);
 		// Font
-					font = new Font("Arial Rounded MT Bold", Font.PLAIN, 20);
+		font = new Font("Arial Rounded MT Bold", Font.PLAIN, 20);
 		
 	}
 	
