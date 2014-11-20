@@ -74,7 +74,7 @@ public class MapObject {
 		return new Rectangle(
 				(int)x - cwidth,
 				(int)y - cheight,
-				cwidth+27,
+				cwidth+19,
 				cheight
 		);
 	}

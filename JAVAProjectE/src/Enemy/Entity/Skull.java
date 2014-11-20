@@ -76,6 +76,50 @@ public class Skull extends Enemy{
 		right = true;
 		facingRight = true;
 	}
+	public Skull(TileMap tm,int power) {
+		super(tm);
+		this.power = power;
+		moveSpeed = 0.8;
+		maxSpeed = 0.8;
+		health = maxHealth = 18+(6*this.power);
+		damage = 10+(12*this.power);
+		atkrange = 20;
+		// load Sprites
+		width = 50;
+		height = 60;
+		cwidth = 20;
+		cheight = 20;
+		try{
+			BufferedImage spritesheet = ImageIO.read(getClass().getResourceAsStream("/Sprites/Enemies/en1.png"));
+			sprites = new ArrayList<BufferedImage[]>();
+			for(int i = 0; i < 2; i++) { 			//play frame
+				BufferedImage[] bi =
+				new BufferedImage[numFrames[i]];
+				for(int j = 0; j < numFrames[i]; j++) {
+					if(i != ATK) {
+						bi[j] = spritesheet.getSubimage(j * width,i * height,width,height);
+					}
+					else {
+						bi[j] = spritesheet.getSubimage(j * width * 2,i * height,width * 2,height);
+					}
+				}
+				
+				sprites.add(bi);
+				
+			}
+		
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		currentAction = WALK;
+		animation = new Animation();
+		animation.setFrames(sprites.get(WALK));
+		animation.setDelay(300);
+		
+		right = true;
+		facingRight = true;
+	}
 	
 	public void getNextPosition(){
 		// movement

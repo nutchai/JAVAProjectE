@@ -17,13 +17,18 @@ public class LevelState extends GameState {
 	private int killcount;
 	private ArrayList<Enemy> enemies;
 	private ArrayList<Enemy> enemies2;
+	private ArrayList<Enemy> enemies3;
+	private ArrayList<Enemy> enemies4;
 	private ArrayList<Explosion> explosion;
 	private TileMap tileMap;
 	
 	private Player player;
-	private int monpow =1;
+	private int monpow =0;
+	private int monlevel =0;
 	private Skull skull;
 	private Skull skull2;
+	private Skull skull3;
+	private Skull skull4;
 	Point[] points = new Point[] {
 			new Point(40, 160),
 			new Point(710, 530),
@@ -61,10 +66,20 @@ public class LevelState extends GameState {
 		explosion = new ArrayList<Explosion>();
 		enemies = new ArrayList<Enemy>();
 		enemies2 = new ArrayList<Enemy>();
-		skull = new Skull(tileMap);
-		skull2 = new Skull(tileMap);
-		skull.setPosition(330, 250);
+		enemies3 = new ArrayList<Enemy>();
+		enemies4 = new ArrayList<Enemy>();
+		skull = new Skull(tileMap,monlevel);
+		skull2 = new Skull(tileMap,monlevel);
+		skull3 = new Skull(tileMap,monlevel);
+		skull4 = new Skull(tileMap,monlevel);
+		skull.setPosition(points[xran].x, points[yran].y);
+		skull2.setPosition(600, 430);
+		skull3.setPosition(300, 180);
+		skull4.setPosition(710, 320);
 		enemies.add(skull);
+		enemies2.add(skull2);
+		enemies3.add(skull3);
+		enemies4.add(skull4);
 		hud = new HUD(player);
 		// Font
 					font = new Font("Arial Rounded MT Bold", Font.PLAIN, 20);
@@ -78,6 +93,7 @@ public class LevelState extends GameState {
 	
 	public void update() {
 		
+		
 		// update player
 		player.update();
 		
@@ -89,11 +105,12 @@ public class LevelState extends GameState {
 				randomxy();
 				player.exp(1);
 				killcount++;
+				monpow++;
+				if(monpow==5) {monlevel++;monpow=0;}
 				enemies.remove(i);
 				i--;
-				skull = new Skull(tileMap);
-				skull.setPosition(points[xran].x, points[yran].y);
-				skull.power(3);
+				skull = new Skull(tileMap,monlevel);
+				skull.setPosition(points[xran].x,points[yran].y);
 				enemies.add(skull);
 				explosion.add(new Explosion(e.getx(),e.gety()));
 			}
@@ -103,10 +120,49 @@ public class LevelState extends GameState {
 			f.update();
 			if(f.isDead()){
 				randomxy();
+				player.exp(1);
 				killcount++;
+				monpow++;
+				if(monpow==5) {monlevel++;monpow=0;}
 				enemies2.remove(i);
 				i--;
-				skull2 = new Skull(tileMap);
+				skull2 = new Skull(tileMap,monlevel);
+				skull2.setPosition(points[xran].x,points[yran].y);
+				enemies2.add(skull2);
+				explosion.add(new Explosion(f.getx(),f.gety()));
+			}
+		}
+		for(int i = 0 ;i<enemies3.size();i++){
+			Enemy g = enemies3.get(i);
+			g.update();
+			if(g.isDead()){
+				randomxy();
+				player.exp(1);
+				killcount++;
+				monpow++;
+				if(monpow==5) {monlevel++;monpow=0;}
+				enemies3.remove(i);
+				i--;
+				skull3 = new Skull(tileMap,monlevel);
+				skull3.setPosition(points[xran].x,points[yran].y);
+				enemies3.add(skull3);
+				explosion.add(new Explosion(g.getx(),g.gety()));
+			}
+		}
+		for(int i = 0 ;i<enemies4.size();i++){
+			Enemy f = enemies4.get(i);
+			f.update();
+			if(f.isDead()){
+				randomxy();
+				player.exp(1);
+				killcount++;
+				monpow++;
+				if(monpow==5) {monlevel++;monpow=0;}
+				enemies4.remove(i);
+				i--;
+				skull4 = new Skull(tileMap,monlevel);
+				skull4.setPosition(points[xran].x,points[yran].y);
+				enemies4.add(skull4);
 				explosion.add(new Explosion(f.getx(),f.gety()));
 			}
 		}
@@ -114,10 +170,14 @@ public class LevelState extends GameState {
 		// attack Enemy
 		player.checkAttack(enemies);
 		player.checkAttack(enemies2);
+		player.checkAttack(enemies3);
+		player.checkAttack(enemies4);
 		
 		// update player position to monster
 		skull.getxy(player.getx(),player.gety());
 		skull2.getxy(player.getx(),player.gety());
+		skull3.getxy(player.getx(),player.gety());
+		skull4.getxy(player.getx(),player.gety());
 		
 		// update explosion
 		for(int i =0;i<explosion.size();i++){
@@ -131,6 +191,8 @@ public class LevelState extends GameState {
 		// update monster position
 		skull.getmonxy(skull.getx(),skull.gety());
 		skull2.getmonxy(skull2.getx(),skull2.gety());
+		skull3.getmonxy(skull3.getx(),skull3.gety());
+		skull4.getmonxy(skull4.getx(),skull4.gety());
 		
 		// dead
 		if (player.dead) {
@@ -162,7 +224,13 @@ public class LevelState extends GameState {
 		}
 		for(int i =0 ;i<enemies2.size();i++){
 			enemies2.get(i).draw(g);
-		}		
+		}	
+		for(int i =0 ;i<enemies3.size();i++){
+			enemies3.get(i).draw(g);
+		}	
+		for(int i =0 ;i<enemies4.size();i++){
+			enemies4.get(i).draw(g);
+		}	
 		
 		// draw hud
 		hud.draw(g);
