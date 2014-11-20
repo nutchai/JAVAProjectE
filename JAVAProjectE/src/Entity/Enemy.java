@@ -9,11 +9,15 @@ public class Enemy extends MapObject{
 	protected int maxHealth;
 	protected boolean dead;
 	protected int damage;
+	protected int power;
 	
 	
 	public Enemy(TileMap tm) {
 		super(tm);
 		
+	}
+	public void power(int power){
+		this.power = power;
 	}
 	public int getdead(){
 		return deadc;

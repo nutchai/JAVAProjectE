@@ -14,7 +14,7 @@ import TileMap.TileMap;
 
 public class Skull extends Enemy{
 	private final int[] numFrames = {
-			8 ,5 //how many of frame of each action
+			8 ,5//how many of frame of each action
 		};
 	private int atkrange;
 	private boolean isatk;
@@ -22,6 +22,7 @@ public class Skull extends Enemy{
 	private int WALK=0;
 	private int x , y;
 	private int mx,my;
+	private int powup=0;
 	private ArrayList<BufferedImage[]> sprites;
 	public void getxy(int x,int y){
 		this.x = x;
@@ -31,20 +32,19 @@ public class Skull extends Enemy{
 		this.mx = mx;
 		this.my = my;
 	}
+
 	public Skull(TileMap tm) {
 		super(tm);
-		
 		moveSpeed = 0.8;
 		maxSpeed = 0.8;
-		
-		health = maxHealth = 5000;
-		damage = 10;
+		health = maxHealth = 18+(6*this.power);
+		damage = 10+(12*this.power);
 		atkrange = 20;
 		// load Sprites
 		width = 50;
 		height = 60;
-		cwidth = 50;
-		cheight = 30;
+		cwidth = 20;
+		cheight = 20;
 		try{
 			BufferedImage spritesheet = ImageIO.read(getClass().getResourceAsStream("/Sprites/Enemies/en1.png"));
 			sprites = new ArrayList<BufferedImage[]>();
@@ -117,7 +117,7 @@ public class Skull extends Enemy{
 		setPosition(xtemp,ytemp);
 		animation.update();
 		
-		 if(mx-x<50&&mx-x>-50) {
+		 if((mx-x<40&&mx-x>-40&&my-y<20&&my-y>-20)) {
 				if(currentAction != ATK) {
 					currentAction = ATK;
 					isatk=true;
@@ -137,7 +137,6 @@ public class Skull extends Enemy{
 			}
 		}
 	}
-	
 	public void draw(Graphics2D g){
 		setMapPosition();
 		super.draw(g);

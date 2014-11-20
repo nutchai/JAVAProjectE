@@ -32,8 +32,8 @@ public class Skills extends MapObject {
 		
 		width = 50;
 		height = 60;
-		cwidth = 14;
-		cheight = 14;
+		cwidth = 50;
+		cheight = 50;
 		
 		if (currentMagic == MAGIC1 || currentMagic == MAGIC6) {
 			if (currentMagic == MAGIC1) moveSpeed = 5;
@@ -79,7 +79,7 @@ public class Skills extends MapObject {
 				}
 				
 				hitSprites = new BufferedImage[5];
-				for(int i=0;i<sprites.length;i++) {
+				for(int i=5;i<sprites.length;i++) {
 					hitSprites[i] = spritesheet.getSubimage(
 						i * width,
 						height + (height*10),

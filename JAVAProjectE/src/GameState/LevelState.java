@@ -1,9 +1,12 @@
 package GameState;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Random;
 
 import Enemy.Entity.Skull;
 import Entity.*;
@@ -13,12 +16,32 @@ import TileMap.TileMap;
 public class LevelState extends GameState {
 	private int killcount;
 	private ArrayList<Enemy> enemies;
+	private ArrayList<Enemy> enemies2;
+	private ArrayList<Explosion> explosion;
 	private TileMap tileMap;
 	
 	private Player player;
+	private int monpow =1;
 	private Skull skull;
-	
+	private Skull skull2;
+	Point[] points = new Point[] {
+			new Point(40, 160),
+			new Point(710, 530),
+			new Point(710, 160),
+			new Point(40, 530),
+			new Point(459, 400),
+			new Point(700, 310),
+			new Point(250, 189),
+			new Point(340, 325),
+			new Point(620, 148),
+		};
+	private long Timer = System.nanoTime();
+	private long time;
+	private long tick=1;
+	Random rand = new Random();
+	private int xran,yran;
 	private HUD hud;
+	private Font font;
 	
 	public LevelState(GameStateManager gsm) {
 		this.gsm = gsm;
@@ -35,15 +58,23 @@ public class LevelState extends GameState {
 		player = new Player(tileMap);
 		player.setPosition(350, 350);
 		
+		explosion = new ArrayList<Explosion>();
 		enemies = new ArrayList<Enemy>();
+		enemies2 = new ArrayList<Enemy>();
 		skull = new Skull(tileMap);
+		skull2 = new Skull(tileMap);
 		skull.setPosition(330, 250);
 		enemies.add(skull);
-		
 		hud = new HUD(player);
+		// Font
+					font = new Font("Arial Rounded MT Bold", Font.PLAIN, 20);
 		
 	}
 	
+	private void randomxy(){
+		xran = rand.nextInt(8)+0;
+		yran = rand.nextInt(8)+0;
+	}
 	
 	public void update() {
 		
@@ -52,26 +83,54 @@ public class LevelState extends GameState {
 		
 		// update monster
 		for(int i = 0 ;i<enemies.size();i++){
-			enemies.get(i).update();
+			Enemy e = enemies.get(i);
+			e.update();
 			if(enemies.get(i).isDead()){
+				randomxy();
+				player.exp(1);
 				killcount++;
 				enemies.remove(i);
 				i--;
 				skull = new Skull(tileMap);
-				skull.setPosition(330, 250);
+				skull.setPosition(points[xran].x, points[yran].y);
+				skull.power(3);
 				enemies.add(skull);
+				explosion.add(new Explosion(e.getx(),e.gety()));
+			}
+		}
+		for(int i = 0 ;i<enemies2.size();i++){
+			Enemy f = enemies2.get(i);
+			f.update();
+			if(f.isDead()){
+				randomxy();
+				killcount++;
+				enemies2.remove(i);
+				i--;
+				skull2 = new Skull(tileMap);
+				explosion.add(new Explosion(f.getx(),f.gety()));
 			}
 		}
 		
 		// attack Enemy
 		player.checkAttack(enemies);
+		player.checkAttack(enemies2);
 		
 		// update player position to monster
 		skull.getxy(player.getx(),player.gety());
+		skull2.getxy(player.getx(),player.gety());
 		
+		// update explosion
+		for(int i =0;i<explosion.size();i++){
+			explosion.get(i).update();
+			if(explosion.get(i).shouldRemove()){
+				explosion.remove(i);
+				i--;
+			}
+		}		
 
 		// update monster position
 		skull.getmonxy(skull.getx(),skull.gety());
+		skull2.getmonxy(skull2.getx(),skull2.gety());
 		
 		// dead
 		if (player.dead) {
@@ -92,13 +151,23 @@ public class LevelState extends GameState {
 		// draw player
 		player.draw(g);
 		
+		// draw explosions
+				for(int i =0;i<explosion.size();i++){
+					explosion.get(i).draw(g);
+				}
+				
 		// draw monster
 		for(int i=0 ;i<enemies.size();i++){
 			enemies.get(i).draw(g);
 		}
+		for(int i =0 ;i<enemies2.size();i++){
+			enemies2.get(i).draw(g);
+		}		
 		
 		// draw hud
 		hud.draw(g);
+		g.setFont(font);
+		g.drawString(""+killcount,350,80);
 
 	}
 	
