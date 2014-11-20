@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Random;
 
+import Audio.AudioPlayer;
 import Enemy.Entity.Skull;
 import Entity.*;
 import Main.GamePanel;
@@ -21,6 +22,9 @@ public class LevelState extends GameState {
 	private ArrayList<Enemy> enemies4;
 	private ArrayList<Explosion> explosion;
 	private TileMap tileMap;
+	
+	//sound
+	private AudioPlayer bgMusic;
 	
 	private Player player;
 	private int monpow =0;
@@ -49,6 +53,8 @@ public class LevelState extends GameState {
 	private Font font;
 	
 	public LevelState(GameStateManager gsm) {
+		bgMusic = new AudioPlayer("/Music/Audio.mp3");
+		bgMusic.play();
 		this.gsm = gsm;
 		init();
 	}

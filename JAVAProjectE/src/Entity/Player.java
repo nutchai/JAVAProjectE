@@ -1,5 +1,6 @@
 package Entity;
 
+import Audio.AudioPlayer;
 import Entity.Animation;
 import Entity.MapObject;
 import TileMap.*;
@@ -25,6 +26,9 @@ public class Player extends MapObject {
 	private boolean flinching;
 	private long flinchTimer;
 	private int exp;
+	
+	// Sound
+	private HashMap<String,AudioPlayer> sfx; 
 	
 	// Magic 1-6
 	private boolean casting;
@@ -184,7 +188,14 @@ public class Player extends MapObject {
 			
 			// Font
 			font = new Font("Arial Rounded MT Bold", Font.PLAIN, 20);
-			
+			sfx = new HashMap<String,AudioPlayer>();
+			sfx.put("Slash",new AudioPlayer("/SFX/Slash.mp3"));
+			sfx.put("Skill1",new AudioPlayer("/Sounds/skill1.mp3"));
+			sfx.put("Skill2",new AudioPlayer("/Sounds/skill2.mp3"));
+			sfx.put("Skill3",new AudioPlayer("/Sounds/skill3.mp3"));
+			sfx.put("Skill4",new AudioPlayer("/Sounds/skill4.mp3"));
+			sfx.put("Skill5",new AudioPlayer("/Sounds/skill5.mp3"));
+			sfx.put("Skill6",new AudioPlayer("/Sounds/skill6.mp3"));
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -195,18 +206,12 @@ public class Player extends MapObject {
 		animation.setFrames(sprites.get(IDLE));
 		animation.setDelay(400);
 		
-		/*sfx = new HashMap<String, AudioPlayer>();
-		sfx.put("jump", new AudioPlayer("/SFX/jump.mp3"));
-		sfx.put("scratch", new AudioPlayer("/SFX/scratch.mp3"));*/
-		
 	}
 	
 	public double getHealth() { return health; }
 	public double getMaxHealth() { return maxHealth; }
 	public double getMana() { return mana; }
 	public double getMaxMana() { return maxMana; }
-//	public int getFire() { return fire; }
-//	public int getMaxFire() { return maxFire; }
 	
 	public void setCastingMagic1() { 
 		if(slashing==false){
@@ -556,7 +561,7 @@ public class Player extends MapObject {
 		// set animation
 		if(slashing) {
 			if(currentAction != SLASHING) {
-				//sfx.get("scratch").play();
+				sfx.get("Slash").play();
 				currentAction = SLASHING;
 				animation.setFrames(sprites.get(SLASHING));
 				animation.setDelay(90);
@@ -565,24 +570,19 @@ public class Player extends MapObject {
 			}
 		}
 		else if (casting) {
-			if (!castingMagic6) {
 				if(currentAction != CASTING) {
+					if (castingMagic1) sfx.get("Skill1").play();
+					if (castingMagic2) sfx.get("Skill2").play();
+					if (castingMagic3) sfx.get("Skill3").play();
+					if (castingMagic4) sfx.get("Skill4").play();
+					if (castingMagic5) sfx.get("Skill5").play();
+					if (castingMagic6) sfx.get("Skill6").play();
 					currentAction = CASTING;
 					animation.setFrames(sprites.get(CASTING));
 					animation.setDelay(300);
 					width = 50;
 					maxSpeed = 0;
 				}
-			}
-			else {
-				if(currentAction != CASTING) {
-					currentAction = CASTING;
-					animation.setFrames(sprites.get(CASTING));
-					animation.setDelay(300);
-					width = 50;
-					maxSpeed = 0 ;
-				}
-			}
 		}
 		else if(left || right || up || down) {
 			if(currentAction != WALKING) {
