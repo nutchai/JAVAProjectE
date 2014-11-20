@@ -244,11 +244,8 @@ public class Player extends MapObject {
 		castingMagic6 = true;}
 	}
 	public void setSlashing() {
-		if(castingMagic6==false&&castingMagic5==false&&castingMagic4==false&&castingMagic3==false&&castingMagic2==false&&castingMagic1==false)
+		if(!castingMagic6&&!castingMagic5&&!castingMagic4&&!castingMagic3&&!castingMagic2&&!castingMagic1)
 		slashing = true;
-	}
-	public void setDead() {
-		dead = true;
 	}
 //	public void setFiring() {
 //		firing = true;
@@ -351,23 +348,72 @@ public class Player extends MapObject {
 			if(dx < -maxSpeed) {
 				dx = -maxSpeed;
 			}
+			if(up) {
+				dy -= moveSpeed;
+				if(dy < -maxSpeed) {
+					dy = -maxSpeed;
+				}
+			}
+			else if(down) {
+				dy += moveSpeed;
+				if(dy > maxSpeed) {
+					dy = maxSpeed;
+				}
+			}
 		}
 		else if(right) {
 			dx += moveSpeed;
 			if(dx > maxSpeed) {
 				dx = maxSpeed;
 			}
+			if(up) {
+				dy -= moveSpeed;
+				if(dy < -maxSpeed) {
+					dy = -maxSpeed;
+				}
+			}
+			else if(down) {
+				dy += moveSpeed;
+				if(dy > maxSpeed) {
+					dy = maxSpeed;
+				}
+			}
 		}
 		else if(up) {
 			dy -= moveSpeed;
 			if(dy < -maxSpeed) {
 				dy = -maxSpeed;
+				dx = 0;
+			}
+			if(left) {
+				dx -= moveSpeed;
+				if(dx < -maxSpeed) {
+					dx = -maxSpeed;
+				}
+			}
+			else if(right) {
+				dx += moveSpeed;
+				if(dx > maxSpeed) {
+					dx = maxSpeed;
+				}
 			}
 		}
 		else if(down) {
 			dy += moveSpeed;
 			if(dy > maxSpeed) {
 				dy = maxSpeed;
+			}
+			if(left) {
+				dx -= moveSpeed;
+				if(dx < -maxSpeed) {
+					dx = -maxSpeed;
+				}
+			}
+			else if(right) {
+				dx += moveSpeed;
+				if(dx > maxSpeed) {
+					dx = maxSpeed;
+				}
 			}
 		}
 		else {
@@ -395,10 +441,10 @@ public class Player extends MapObject {
 					dy = 0;
 				}
 			}
-			if (currentAction == SLASHING || currentAction == CASTING) {
-					dx = 0;
-					dy = 0;
-				}
+		}
+		if (currentAction == SLASHING || currentAction == CASTING) {
+			dx = 0;
+			dy = 0;
 		}
 		
 	}
@@ -409,6 +455,9 @@ public class Player extends MapObject {
 		getNextPosition();
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
+		
+		//dead
+//		if (dead) {}
 		
 		// check attack has stopped
 		if(currentAction == SLASHING) {
@@ -609,6 +658,8 @@ public class Player extends MapObject {
 				width = 50;
 			}
 		}
+		
+		
 		
 		animation.update();
 		
